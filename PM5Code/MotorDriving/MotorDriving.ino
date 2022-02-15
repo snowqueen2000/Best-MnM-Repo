@@ -4,7 +4,7 @@ int mp1 = 5;
 int mp2 = 6;
 
 double f = 0.5; // frequency in Hz
-
+// hello
 Encoder myEnc(20,21);
 
 // === GLOBAL VARIABLES === //
