@@ -5,7 +5,7 @@ int mp2 = 6;
 
 double f = 0.5; // frequency in Hz
 
-Encoder myEnc(50, 51);
+Encoder myEnc(20,21);
 
 // === GLOBAL VARIABLES === //
 double GearRatio = 313;         // the gear ratio
@@ -30,12 +30,21 @@ void setup() {
 }
 
 void loop() {
-  digitalWrite(mp1, LOW);
-  digitalWrite(mp2, HIGH);
 
   t_ms = millis();
   t = t_ms / 1000.0;  
 
+
+  if(t_ms % 4000 == 0 && t_ms%8000 != 0) {
+    digitalWrite(mp1, LOW);
+    digitalWrite(mp2, HIGH);
+  } else if(t_ms%8000 == 0) {
+    digitalWrite(mp1, HIGH);
+    digitalWrite(mp2, LOW);
+
+  }
+
+//=======
 if (t>t_old_enc+T_enc) {
 // === Position and Velocity === //
   counts = myEnc.read();  // get current counts
