@@ -1,7 +1,7 @@
 #include <Encoder.h>
 
-int mp1 = 5;
-int mp2 = 6;
+int mp1 = 6;
+int mp2 = 7;
 
 double f = 0.5; // frequency in Hz
 // hello
@@ -48,7 +48,7 @@ void loop() {
 if (t>t_old_enc+T_enc) {
 // === Position and Velocity === //
   counts = myEnc.read();  // get current counts
-  Pos = (counts*2*3.14159)/(20*313);               // Position in rad
+  Pos = (counts*100)/(20*313);               // Position in rad
   Vel = (Pos - Pos_old)/(t - t_old_enc);           // Velocity in rad/sec 
 
   Serial.print(t, 5);     // print time; comment out if using the serial plotter
