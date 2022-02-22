@@ -27,10 +27,12 @@ double T_motor=0.01;         // motor control sample time
 //Controller variables
 double Pos_desired = 0;
 double acceptableError = 2;
+double error_old = 0;
+
 
 //Controller gains. NEED TUNING
-double Kp  = 2;
-double Kd = 0;
+double Kp  = 0.5; //0.6 goes unstable
+double Kd = 0.0312;
 
 void setup() {
   Serial.begin(9600); 
@@ -56,19 +58,14 @@ void loop() {
   if (t>t_old_enc+T_enc) {
   // === Position and Velocity === //
     counts = myEnc.read();  // get current counts
-    Pos = (counts*360)/(20*313);               // Position in deg
+    Pos = (counts*360.0)/(20.0*313.0);               // Position in deg
     Vel = (Pos - Pos_old)/(t - t_old_enc);           // Velocity in deg/sec 
   
-//    Serial.print(t, 5);     // print time; comment out if using the serial plotter
-//    Serial.print(",\t");     // tab command
-//    Serial.print(Pos, 5);   // print position
-//    Serial.print(",\t");
-//    Serial.println(Vel, 5); // print velocity
-    
-    Pos_old = Pos;
-    t_old_enc = t; //save current time and position
-
-
+    Serial.print(t, 5);     // print time; comment out if using the serial plotter
+    Serial.print(",\t");     // tab command
+    Serial.print(Pos, 5);   // print position
+    Serial.print(",\t");
+    Serial.println(Vel, 5); // print velocity
 
 
 
@@ -78,36 +75,35 @@ void loop() {
     }
 
     //If motor is at the desired position.
-    if(abs(Pos - Pos_desired) < acceptableError || abs((Pos-360.0) - Pos_desired) < acceptableError || abs(Pos - (Pos_desired - 360.0)) < acceptableError) {
-      Serial.println("Please enter an integer position in degrees from 0 to 359");
+    //if(abs(Pos - Pos_desired) < acceptableError || abs((Pos-360.0) - Pos_desired) < acceptableError || abs(Pos - (Pos_desired - 360.0)) < acceptableError) {
+      //Serial.println("Please enter an integer position in degrees from 0 to 359");
       if(Serial.available()>0) {
         Pos_desired = Serial.parseInt();
+        Serial.read();
+        Serial.print("Desired position: ");
+        Serial.println(Pos_desired);
       }
-    }
+    //}
 
-    double input = Kp*(Pos - Pos_desired);
+    double error = Pos - Pos_desired;
+    double derrordt = error/(t - t_old_enc);
     
-    input = input + Kd*Vel;
+    double input = Kp*(error);
+    
+    input = input - Kd*(derrordt);
     
     //Ensure values are something that the motor controller can provide
     input = constrain(input, -10.0, 10.0);
   
     //Send command to motor
     motorCommand(mp1, mp2, mPWM, input);
+    //Serial.println(input);
+
+
+    error_old = error;
+    Pos_old = Pos;
+    t_old_enc = t; //save current time and position
 
   }
 
-}
-
-void motorCommand(int mpa, int mpb, int PWM, double command) {
-
-  if(command > 0) {
-    digitalWrite(mpa, HIGH);
-    digitalWrite(mpb, LOW);
-  } else {
-    digitalWrite(mpa, LOW);
-    digitalWrite(mpb, HIGH);
-  }
-  analogWrite(PWM, command);
-  
 }
