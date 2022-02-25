@@ -1,4 +1,5 @@
 #include <Encoder.h>
+#include <Servo.h>
 
 const int mp1 = 6;
 const int mp2 = 7;
@@ -6,6 +7,14 @@ const int mPWM = 5;
 
 
 Encoder myEnc(20,21);
+
+//Attach servos
+Servo servo1;
+Servo servo2;
+
+//servo pins
+const int servo1Pin = 9;
+const int servo2Pin = 10;
 
 //time variables
 unsigned long t_ms = 0;
@@ -22,10 +31,17 @@ double T_motor=0.01;         // motor control sample time
 double Pos_desired = 0;
 double error_old = 0;
 
+
 void setup() {
   Serial.begin(9600); 
   pinMode(mp1, OUTPUT);
   pinMode(mp2, OUTPUT);
+
+  //initialize servos
+  servo1.attach(servo1Pin); 
+  servo2.attach(servo2Pin); 
+  servo1.write(0);              
+  servo2.write(0);
 
   startUp();
   

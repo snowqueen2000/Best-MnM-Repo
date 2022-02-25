@@ -12,8 +12,5 @@ void EncoderCalcs() {
     Vel = (Pos - Pos_old)/(t - t_old_enc);           // Velocity in deg/sec 
 
 
-    //Loop position back to zero if it gets over 360 degrees
-    if(Pos >= 360.0) {
-      Pos = Pos - 360.0;
-    }
+    
 }

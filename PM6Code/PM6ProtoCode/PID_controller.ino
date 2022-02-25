@@ -1,14 +1,14 @@
 //PID gains
-double Kp  = 0.5; //0.6 goes unstable
-double Kd = 0.0312;
-double Ki = 0.001;
+double Kp  = 0.03; 
+double Kd = 0.0003;
+double Ki = 0.0002;
 
 //CHANGE THIS TO CHANGE VELOCITY
 //double Vel_desired = 2; //RPM
-double Vel_desiredM = 2; //MnMs per second
+double Vel_desiredM = 5; //MnMs per second
 
 //double Vel_desiredDeg = Vel_desired*360.0/60.0; //convert from RPM to deg/s
-double Vel_desiredDeg = Vel_desiredM*30; // convert from MnMs/s to deg/s
+double Vel_desiredDeg = Vel_desiredM*60; // convert from MnMs/s to deg/s
 
 double integralError = 0;
 
@@ -27,7 +27,7 @@ double PID_controller() {
     input = input - Kd*(derrordt);
 
     //Add integral component
-    input = input + Ki*integralError;
+    input = input - Ki*integralError;
     
     //Ensure values are something that the motor controller can provide
     return constrain(input, -10.0, 10.0);
