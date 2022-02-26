@@ -1,8 +1,19 @@
 
 void servoChecks() {
 
-  
+  //Gate 1:
+  if(gate1Slot == 's') {
+    OpenGate1();
+  } else {
+    CloseGate1();
+  }
 
+  //Gate 2:
+  if(gate2Slot == 'u') {
+    OpenGate2();
+  } else {
+    CloseGate2();
+  }
   
 }
 

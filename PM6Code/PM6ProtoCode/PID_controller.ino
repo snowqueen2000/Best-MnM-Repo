@@ -5,7 +5,7 @@ double Ki = 0.0002;
 
 //CHANGE THIS TO CHANGE VELOCITY
 //double Vel_desired = 2; //RPM
-double Vel_desiredM = 5; //MnMs per second
+double Vel_desiredM = 2; //MnMs per second
 
 //double Vel_desiredDeg = Vel_desired*360.0/60.0; //convert from RPM to deg/s
 double Vel_desiredDeg = Vel_desiredM*60; // convert from MnMs/s to deg/s

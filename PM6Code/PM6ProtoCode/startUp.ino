@@ -6,7 +6,7 @@
 void startUp() {
 
   //turn motor slowly
-  motorCommand(mp1, mp2, mPWM, 3);
+  //motorCommand(mp1, mp2, mPWM, 3);
   
   //wait until the sensor passes one hole, then stop at the next hole.
 

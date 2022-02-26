@@ -31,6 +31,12 @@ double T_motor=0.01;         // motor control sample time
 double Pos_desired = 0;
 double error_old = 0;
 
+//Sensor variables
+char senseSlot = 'n';
+char gate1Slot = 'n';
+char gate2Slot = 'n';
+char gate3Slot = 'n';
+char stopper = false;
 
 void setup() {
   Serial.begin(9600); 
@@ -52,12 +58,19 @@ void loop() {
   t_ms = millis();
   t = t_ms / 1000.0;  
 
-  //Only run every timestep
-  if (t>t_old_enc+T_enc) {
+  //if stop has been triggered somewhere (see storeCandies), turn off the motor.
+  if(stopper) {
+    motorCommand(mp1,mp2,mPWM,0);
+  }
+  
+  //Only run every timestep, and if stop hasn't been triggered.
+  if (t>t_old_enc+T_enc && !stopper) {
 
+ 
     //Read encoder counts and calculate position/velocity
     EncoderCalcs();
-
+    
+    
     //Checks current position and decides which gates to open/close
     servoChecks();
 
@@ -74,6 +87,11 @@ void loop() {
     Pos_old = Pos;
     t_old_enc = t; //save current time and position
 
+ 
   }
+
+  //sensing code and virtual conveyer.
+  storeCandies();
+  
 
 }
