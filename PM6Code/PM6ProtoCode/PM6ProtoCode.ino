@@ -24,7 +24,7 @@ double t_old_mot = 0;         // previous motor sample time
 double Pos = 0;               // current pos
 double Vel = 0;               // current velocity
 double Pos_old = 0;           // previous pos
-double T_enc=0.1;            // sample period in seconds
+double T_enc=0.05;            // sample period in seconds
 double T_motor=0.01;         // motor control sample time
 
 //Controller variables
@@ -37,6 +37,8 @@ char gate1Slot = 'n';
 char gate2Slot = 'n';
 char gate3Slot = 'n';
 char stopper = false;
+
+char input[] = {' ',' ',' ',' ',' ',' ',' ',' ',' ',' '};
 
 void setup() {
   Serial.begin(9600); 
@@ -63,8 +65,8 @@ void loop() {
     motorCommand(mp1,mp2,mPWM,0);
   }
   
-  //Only run every timestep, and if stop hasn't been triggered.
-  if (t>t_old_enc+T_enc && !stopper) {
+  //Only run every timestep
+  if (t>t_old_enc+T_enc) {
 
  
     //Read encoder counts and calculate position/velocity

@@ -1,8 +1,9 @@
 
+
 //This variable ensures that the array updates only once.
 bool shouldRun = true;
-int i = 0;
 int j = 0;
+int tDelay = 18/Vel_DesiredM;
 
 void storeCandies() {
 
@@ -18,35 +19,28 @@ void storeCandies() {
    * 's' = sort this candy (gate 1)
    */
 
-   char input;
-  if(Serial.available()>0) {
-    input[i] = Serial.read();
-    i++;
-  }
-
-  //Serial command to stop the motor
-  if(input[i-1] == ' ') {
-    stopper = true;
-  } else if(input[i-1] != ' ') {
-    stopper = false;
-  }
-  
-
   //if 30 deg, update sensing slot
-  if((int)floor(Pos)%30 == 0) {
+  if((int)floor(Pos)%35 <= 10) {
     senseSlot = input[j];
-    Serial.println("sense recieved!");
+    Serial.print("At 30 deg! Running command: ");
+    Serial.print(j);
+    Serial.println(input[j]);
     shouldRun = true;
   }
   
   
   //if 15 deg, update array
-  if((int)floor(Pos)%15 == 0 && (int)floor(Pos)%30 != 0 && shouldRun) {
+  if((int)floor(Pos)%20 <= 10 && (int)floor(Pos)%30 > 10 && shouldRun) {
     gate3Slot = gate2Slot;
     gate2Slot = gate1Slot;
     gate1Slot = senseSlot;
     Serial.println("array has updated");
     shouldRun = false;
+    j = j+1;
+  }
+
+  if(j >= 10) {
+    j = 0;
   }
   
    

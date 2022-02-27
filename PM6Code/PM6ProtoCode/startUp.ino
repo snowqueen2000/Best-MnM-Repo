@@ -5,6 +5,26 @@
 //Note: While this function is running, nothing else will happen!
 void startUp() {
 
+  //close all gates
+  CloseGate1();
+  CloseGate2();
+
+  //User input to mimic sensor
+  
+  //Can take up to 9 commands before restarting arduino.
+
+  for (int i = 0; i < 10; i++) {
+    while(Serial.available() <= 0) {}
+      input[i] = Serial.read();
+      Serial.println("Input updated!");
+  }
+  
+  Serial.println("All input recieved. Input:");
+  for(int k = 0; k < 10; k++) {
+    Serial.println(input[k] + ", ");
+  }
+
+  
   //turn motor slowly
   //motorCommand(mp1, mp2, mPWM, 3);
   
