@@ -1,7 +1,7 @@
 //PID gains
 double Kp  = 0.03; 
 double Kd = 0.0003;
-double Ki = 0.0002;
+double Ki = 0;
 
 //CHANGE THIS TO CHANGE VELOCITY
 //double Vel_desired = 2; //RPM
