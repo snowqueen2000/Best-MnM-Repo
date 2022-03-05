@@ -100,6 +100,8 @@ void loop() {
 
   //sensing code and virtual conveyer.
   storeCandies();
-  
+
+  //updates OLED screen
+  screen();  
 
 }
