@@ -1,3 +1,4 @@
+#include <QTRSensors.h>
 #include <Encoder.h>
 #include <Servo.h>
 
@@ -38,6 +39,8 @@ char gate2Slot = 'n';
 char gate3Slot = 'n';
 char stopper = false;
 
+int Qsize = 0;
+
 char input[] = {' ',' ',' ',' ',' ',' ',' ',' ',' ',' '};
 
 void setup() {
@@ -60,13 +63,16 @@ void loop() {
   t_ms = millis();
   t = t_ms / 1000.0;  
 
-  //if stop has been triggered somewhere (see storeCandies), turn off the motor.
+  //Reads sensor value and translates that into number of candies in the queue (Qsize). Also sends messages to previous module if needed.
+  Qsensing();
+  
+  //if stop has been triggered somewhere (see Qsensing), turn off the motor.
   if(stopper) {
     motorCommand(mp1,mp2,mPWM,0);
   }
   
   //Only run every timestep
-  if (t>t_old_enc+T_enc) {
+  if (t>t_old_enc+T_enc && !stopper) {
 
  
     //Read encoder counts and calculate position/velocity
