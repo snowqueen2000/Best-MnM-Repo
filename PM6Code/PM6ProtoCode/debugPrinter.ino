@@ -14,6 +14,10 @@ void debugPrinter(int type) {
       
     break;
 
+    case 1:
+      Serial.print("Queue size: ");
+      Serial.println(Qsize);
+
   case 0:
   break;
   }

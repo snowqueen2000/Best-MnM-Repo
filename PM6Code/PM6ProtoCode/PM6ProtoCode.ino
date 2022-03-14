@@ -1,13 +1,19 @@
 #include <QTRSensors.h>
 #include <Encoder.h>
 #include <Servo.h>
+#include <SPI.h>
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+
 
 const int mp1 = 6;
 const int mp2 = 7;
 const int mPWM = 5;
 
 
-Encoder myEnc(20,21);
+QTRSensors qtr;
+Encoder myEnc(44,46);
 
 //Attach servos
 Servo servo1;
@@ -39,7 +45,15 @@ char gate2Slot = 'n';
 char gate3Slot = 'n';
 char stopper = false;
 
+//queue sensor variables
 int Qsize = 0;
+int maxQsize = 6;
+const uint8_t SensorCount = 11;
+uint16_t sensorValues[SensorCount];
+
+//OLED variables/set up
+#define OLED_RESET 4
+Adafruit_SSD1306 display(OLED_RESET);
 
 char input[] = {' ',' ',' ',' ',' ',' ',' ',' ',' ',' '};
 
@@ -53,6 +67,15 @@ void setup() {
   servo2.attach(servo2Pin); 
   servo1.write(0);              
   servo2.write(0);
+
+  //initialize Queue sensor
+  qtr.setTypeRC();
+  qtr.setSensorPins((const uint8_t[]){22,24,26,28,30,32,34,36,38,40,42}, SensorCount);
+  qtr.setEmitterPin(2);
+
+  //initialize OLED
+  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+  display.clearDisplay();
 
   startUp();
   
@@ -84,7 +107,6 @@ void loop() {
 
     //Change parameter to 0 if nothing should be printed.
     debugPrinter(1);
-
 
     //Convert voltage to position using PID controller
     double input = PID_controller();

@@ -7,8 +7,14 @@
  */
 void screen() {
   
-
-  //NOTE: Make sure to include the OLED library at the top of PM6ProtoCode
-
+  display.clearDisplay();
+  display.setTextSize(2);
+  display.setTextColor(WHITE);
+  display.setCursor(0,0);
+  display.println("In queue:");
+  display.print(Qsize);
+  display.print("/");
+  display.println(maxQsize);
+  display.display();
   
 }
