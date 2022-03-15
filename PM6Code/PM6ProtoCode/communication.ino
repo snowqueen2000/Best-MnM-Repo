@@ -5,6 +5,7 @@ int commInPin = 52;
 /**
  * Checks for message from the next module, and sends messages to previous module.
  */
+ 
 void communication() {
 
   //Tell previous module to stop sending MnMs if queue is full
@@ -26,5 +27,4 @@ void communication() {
     stopper = false;
   }
 
-  
 }
