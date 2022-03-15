@@ -13,7 +13,7 @@ const int mPWM = 5;
 
 
 QTRSensors qtr;
-Encoder myEnc(44,46);
+Encoder myEnc(18,19);
 
 //Attach servos
 Servo servo1;
@@ -43,7 +43,7 @@ char senseSlot = 'n';
 char gate1Slot = 'n';
 char gate2Slot = 'n';
 char gate3Slot = 'n';
-char stopper = false;
+bool stopper = false;
 
 //queue sensor variables
 int Qsize = 0;
@@ -89,17 +89,21 @@ void loop() {
   //Reads sensor value and translates that into number of candies in the queue (Qsize). Also sends messages to previous module if needed.
   Qsensing();
 
-  debugPrinter(2);
+  //debugPrinter(2);
+
+  communication();
   
   //if stop has been triggered somewhere (see Qsensing), turn off the motor.
   if(stopper) {
     motorCommand(mp1,mp2,mPWM,0);
   }
+
+  Serial.println(stopper);
   
   //Only run every timestep
   if (t>t_old_enc+T_enc && !stopper) {
 
- 
+    Serial.println("motor loop is running!");
     //Read encoder counts and calculate position/velocity
     EncoderCalcs();
     
@@ -108,7 +112,7 @@ void loop() {
     servoChecks();
 
     //Change parameter to 0 if nothing should be printed.
-    debugPrinter(1);
+    //debugPrinter(1);
 
     //Convert voltage to position using PID controller
     double input = PID_controller();

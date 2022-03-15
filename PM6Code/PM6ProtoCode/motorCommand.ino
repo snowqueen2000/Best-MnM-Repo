@@ -11,6 +11,10 @@ void motorCommand(int mpa, int mpb, int PWM, double command) {
     digitalWrite(mpa, LOW);
     digitalWrite(mpb, HIGH);
     command = map(command, 0, 10, 0, 255);
+  } else if(command == 0.0) {
+      digitalWrite(mpa, LOW);
+      digitalWrite(mpb, LOW);
+      Serial.println("You should stop!");
   } else {
     digitalWrite(mpa, HIGH);
     digitalWrite(mpb, LOW);
