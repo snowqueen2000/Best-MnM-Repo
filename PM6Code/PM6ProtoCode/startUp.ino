@@ -9,6 +9,14 @@ void startUp() {
   CloseGate1();
   CloseGate2();
 
+  //Welcome message
+  display.clearDisplay();
+  display.setTextSize(1);
+  display.setTextColor(WHITE);
+  display.setCursor(0,0);
+  display.println("Waiting for serial \ninput...");
+  display.display();
+
   //User input to mimic sensor
   
   //Can take up to 9 commands before restarting arduino.

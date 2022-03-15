@@ -88,6 +88,8 @@ void loop() {
 
   //Reads sensor value and translates that into number of candies in the queue (Qsize). Also sends messages to previous module if needed.
   Qsensing();
+
+  debugPrinter(2);
   
   //if stop has been triggered somewhere (see Qsensing), turn off the motor.
   if(stopper) {
@@ -117,13 +119,14 @@ void loop() {
     Pos_old = Pos;
     t_old_enc = t; //save current time and position
 
+    //updates OLED screen
+    screen();
  
   }
 
   //sensing code and virtual conveyer.
   storeCandies();
 
-  //updates OLED screen
-  screen();  
+  
 
 }
