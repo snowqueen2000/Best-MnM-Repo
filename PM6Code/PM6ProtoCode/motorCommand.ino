@@ -1,4 +1,3 @@
-
 /**Gives motor the correct direction and speed based on a signed input.
  * mpa: motor pin 1
  * mpb: motor pin 2
@@ -11,6 +10,9 @@ void motorCommand(int mpa, int mpb, int PWM, double command) {
     digitalWrite(mpa, LOW);
     digitalWrite(mpb, HIGH);
     command = map(command, 0, 10, 0, 255);
+  } else if(command == 0) {
+      digitalWrite(mpa, LOW);
+      digitalWrite(mpb, LOW);
   } else {
     digitalWrite(mpa, HIGH);
     digitalWrite(mpb, LOW);
@@ -19,5 +21,5 @@ void motorCommand(int mpa, int mpb, int PWM, double command) {
 
   //Serial.println(command);
   analogWrite(PWM, command);
-  
+
 }

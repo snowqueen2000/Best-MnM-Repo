@@ -12,7 +12,6 @@ double Vel_desiredDeg = Vel_desiredM*60; // convert from MnMs/s to deg/s
 
 double integralError = 0;
 
-
 double PID_controller() {
 
     //Calculate error and the d/dt of error and integral error
@@ -32,7 +31,6 @@ double PID_controller() {
     //Ensure values are something that the motor controller can provide
     return constrain(input, -10.0, 10.0);
   
-
     error_old = error;
   
 }

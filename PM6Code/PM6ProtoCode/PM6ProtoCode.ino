@@ -6,14 +6,12 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 
-
 const int mp1 = 6;
 const int mp2 = 7;
 const int mPWM = 5;
 
-
 QTRSensors qtr;
-Encoder myEnc(44,46);
+Encoder myEnc(18, 19);
 
 //Attach servos
 Servo servo1;
@@ -78,7 +76,6 @@ void setup() {
   display.clearDisplay();
 
   startUp();
-  
 }
 
 void loop() {
@@ -99,10 +96,8 @@ void loop() {
   //Only run every timestep
   if (t>t_old_enc+T_enc && !stopper) {
 
- 
     //Read encoder counts and calculate position/velocity
     EncoderCalcs();
-    
     
     //Checks current position and decides which gates to open/close
     servoChecks();
@@ -121,12 +116,8 @@ void loop() {
 
     //updates OLED screen
     screen();
- 
   }
 
   //sensing code and virtual conveyer.
   storeCandies();
-
-  
-
 }

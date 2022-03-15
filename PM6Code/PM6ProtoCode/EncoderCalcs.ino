@@ -11,6 +11,4 @@ void EncoderCalcs() {
     Pos = (counts*360.0)/(countsPerRev_motor*GearRatio);   // Position in deg
     Vel = (Pos - Pos_old)/(t - t_old_enc);           // Velocity in deg/sec 
 
-
-    
 }

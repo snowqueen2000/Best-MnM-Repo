@@ -1,4 +1,3 @@
-
 //Function that prints data to serial. Only needed for debugging.
 //If type = 0, nothing will be printed.
 void debugPrinter(int type) {
