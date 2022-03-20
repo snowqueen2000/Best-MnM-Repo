@@ -56,7 +56,7 @@ uint16_t sensorValues[SensorCount];
 #define OLED_RESET 4
 Adafruit_SSD1306 display(OLED_RESET);
 
-char input[] = {' ',' ',' ',' ',' ',' ',' ',' ',' ',' '};
+char input = ' ';
 
 void setup() {
   Serial.begin(9600); 
@@ -90,7 +90,7 @@ void loop() {
   //Reads sensor value and translates that into number of candies in the queue (Qsize). Also sends messages to previous module if needed.
   Qsensing();
 
-  debugPrinter(2);
+  //debugPrinter(2);
 
   communication();
   
@@ -99,18 +99,21 @@ void loop() {
     motorCommand(mp1,mp2,mPWM,0);
   }
 
-  //Serial.println(stopper);
+  Serial.println(stopper);
   
   //Only run every timestep
   if (t>t_old_enc+T_enc && !stopper) {
 
-    //Serial.println("motor loop is running!");
+    Serial.println("motor loop is running!");
     //Read encoder counts and calculate position/velocity
     EncoderCalcs();
     
     
     //Checks current position and decides which gates to open/close
     servoChecks();
+
+    //Change parameter to 0 if nothing should be printed.
+    //debugPrinter(1);
 
     //Convert voltage to position using PID controller
     double input = PID_controller();
