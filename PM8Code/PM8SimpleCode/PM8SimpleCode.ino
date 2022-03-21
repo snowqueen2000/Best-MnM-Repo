@@ -8,6 +8,11 @@
 #include <Adafruit_SSD1306.h>
 
 
+//color sensor variables
+#define blue_pin 13
+#define green_pin 12
+#define red_pin 11
+
 const int mp1 = 6;
 const int mp2 = 7;
 const int mPWM = 5;
@@ -26,8 +31,10 @@ double Vel = 0;               // current velocity
 double Pos_old = 0;           // previous pos
 double T_enc=0.05;            // sample period in seconds
 double T_motor=0.01;          // motor control sample time
-double T_movement = 3;      // Movement Delay in seconds
+double T_movement = 10;      // Movement Delay in seconds
 double T_moveOld = 0;
+double T_color = 0.04;
+double t_colorOld = 0;
 
 //Controller variables
 double Pos_desired = 0;
@@ -38,6 +45,9 @@ double error_old = 0;
 double loopSpeed = 0;
 double oldLoopTime = 0;
 double runs = 0;
+
+//Color sensor variables
+int vals[3];                 // array to store three color reading 
 
 void setup() {
   Serial.begin(9600); 
@@ -76,14 +86,27 @@ void loop() {
     runs++;
   }
 
+
+  if(t > t_colorOld + T_color) {
+    colorSensor();
+    t_colorOld = t;
+  }
+
+
   //Rotate to next 30 degree slot
   if(t > T_moveOld + T_movement) {
+    //Decide what color candy is under the sensor and which slot it will need to go to
+    storeCandy();
+    
+    //update the virtual slots
+    
+
+    //Move servos
+
+    //Move to next position
     Pos_desired += 30;
     T_moveOld = t;
   }
 
-  if(Pos % 35 <= 10) {
-    colorSensor();
-  }
 
 }
