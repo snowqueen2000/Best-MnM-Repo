@@ -2,8 +2,10 @@
 
 SoftwareSerial mySerial(10, 11); // RX, TX
 
-int IN3 = 5;
-int IN4 = 5;
+int IN3 = 6;
+int IN4 = 7;
+int SignalAbove = 51;    
+bool val = 0; 
 
 void setup()  
 {
@@ -30,19 +32,15 @@ void loop() // run over and over
 //  clockwise
   digitalWrite(IN3, HIGH);
   digitalWrite(IN4, LOW);
-  delay(2000);
-
-  digitalWrite(IN3,HIGH);
-  digitalWrite(IN4, HIGH);
-  delay(500);
-//  counterclockwise
-  digitalWrite(IN3, LOW);
-  digitalWrite(IN4, HIGH);
-  delay(2000);
-
-  digitalWrite(IN3, HIGH);
-  digitalWrite(IN4, HIGH);
-  delay(500);
+  
+val = digitalRead(SignalAbove); // read the input pin
+  Serial.println(val);
+  if(val == 1) {
+    digitalWrite(IN3, LOW);
+    digitalWrite(IN4, LOW);
+  }
+  
+  
   
   
   

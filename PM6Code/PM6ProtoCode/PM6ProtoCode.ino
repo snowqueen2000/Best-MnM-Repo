@@ -90,25 +90,20 @@ void loop() {
   t_ms = millis();
   t = t_ms / 1000.0;  
 
-  Serial.println(t_ms);
+  //Serial.println(t_ms);
  
-  val = digitalRead(SignalAbove); // read the input pin
-  Serial.println(val);
-  if(val==1) {
-  delay(10000);
-  }
-  
 
+  
   
   //Reads sensor value and translates that into number of candies in the queue (Qsize). Also sends messages to previous module if needed.
   Qsensing();
 
-  //debugPrinter(2);
+  debugPrinter(2);
   
   //if stop has been triggered somewhere (see Qsensing), turn off the motor.
-  if(stopper) {
-    motorCommand(mp1,mp2,mPWM,0);
-  }
+  //if(stopper) {
+   // motorCommand(mp1,mp2,mPWM,0);
+  //}
   
   //Only run every timestep
   if (t>t_old_enc+T_enc && !stopper) {
@@ -128,8 +123,15 @@ void loop() {
     double input = PID_controller();
     
     //Send command to motor
-    motorCommand(mp1, mp2, mPWM, input);
-
+    motorCommand(mp1, mp2, mPWM, 4);
+    
+  //val = digitalRead(SignalAbove); // read the input pin
+  //if(val == 1) {
+  //  motorCommand(mp1, mp2, mPWM, 0);
+  //  Serial.print("Inside if");
+  //}
+  
+    
     Pos_old = Pos;
     t_old_enc = t; //save current time and position
 
