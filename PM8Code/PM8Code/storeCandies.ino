@@ -24,10 +24,10 @@ void storeCandies() {
    */
 
   //if 30 deg, update sensing slot
-  if((int)floor(Pos)%35 <= 10) {
+  if((int)floor(Pos)%40 <= 20) {
     colorSensor(newCand);
     senseSlot = input;
-    //Serial.print("At 30 deg! Running command: ");
+    Serial.println("At 30 deg! Running command: ");
     //Serial.print(j);
     //Serial.println(input[j]);
     shouldRun = true;

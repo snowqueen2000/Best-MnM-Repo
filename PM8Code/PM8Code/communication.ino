@@ -18,8 +18,8 @@ void communication() {
   //Stop sorting operation if next module tells it to.
   int commIn = digitalRead(commInPin);
 
-  Serial.print("commInPin: ");
-  Serial.println(commIn);
+  //Serial.print("commInPin: ");
+  //Serial.println(commIn);
   
   if(commIn == 1) {
     stopper = true;

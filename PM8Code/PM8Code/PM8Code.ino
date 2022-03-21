@@ -58,6 +58,15 @@ Adafruit_SSD1306 display(OLED_RESET);
 
 char input = ' ';
 
+//color sensor variables
+#define blue_pin 13
+#define green_pin 12
+#define red_pin 11
+
+double loopSpeed = 0;
+double oldLoopTime = 0;
+double runs = 0;
+
 void setup() {
   Serial.begin(9600); 
   pinMode(mp1, OUTPUT);
@@ -78,6 +87,12 @@ void setup() {
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
   display.clearDisplay();
 
+  //Initialize color sensor pins
+  pinMode(blue_pin, OUTPUT); digitalWrite(blue_pin,LOW);
+  pinMode(green_pin, OUTPUT); digitalWrite(green_pin,LOW);
+  pinMode(red_pin, OUTPUT); digitalWrite(red_pin,LOW);
+
+
   startUp();
   
 }
@@ -87,6 +102,12 @@ void loop() {
   t_ms = millis();
   t = t_ms / 1000.0;  
 
+  //calculate how fast the loop is running
+  loopSpeed = (t_ms - oldLoopTime);
+  //Serial.print("Loop speed: ");
+  //Serial.println(loopSpeed);
+  
+  
   //Reads sensor value and translates that into number of candies in the queue (Qsize). Also sends messages to previous module if needed.
   Qsensing();
 
@@ -99,12 +120,12 @@ void loop() {
     motorCommand(mp1,mp2,mPWM,0);
   }
 
-  Serial.println(stopper);
+  //Serial.println(stopper);
   
   //Only run every timestep
   if (t>t_old_enc+T_enc && !stopper) {
 
-    Serial.println("motor loop is running!");
+    //Serial.println("motor loop is running!");
     //Read encoder counts and calculate position/velocity
     EncoderCalcs();
     
@@ -126,7 +147,11 @@ void loop() {
 
     //updates OLED screen
     screen();
- 
+
+
+    //calculations for finding loop speed
+    oldLoopTime = t_ms;
+    runs++;
   }
 
   //sensing code and virtual conveyer.

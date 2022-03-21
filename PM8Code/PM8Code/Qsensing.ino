@@ -12,7 +12,7 @@ void Qsensing() {
     // read raw sensor values
     qtr.read(sensorValues);
   
-    Serial.println("Queue code is running!");
+    //Serial.println("Queue code is running!");
   
     if(sensorValues[0] > 600) {
       if(sensorValues[1] > 600) {
