@@ -8,6 +8,7 @@ int thisCandyB[maxDataPerCandy];
 
 int readingIndex = 0;
 
+
 //Calibrated values. Use Active_color_sensor-2 to recalibrate if needed.
   
     //bgr:  max, min, max, min, max, min
@@ -42,11 +43,12 @@ void colorSensor(bool newCandy) {
   double avgR = 0;
   double avgG = 0;
   double avgB = 0;
+
   
   //if newCandy is true, the sensor has started reading a new candy and the array needs to restart at zero
   if(newCandy) {
     readingIndex = 0;
-    lightColor = 'b';
+    dataCollected = 0;
   }
 
   long timeCurrent = millis();
@@ -90,6 +92,9 @@ void colorSensor(bool newCandy) {
       digitalWrite(green_pin,LOW);
       digitalWrite(red_pin,HIGH);
 
+
+
+      dataCollected++;
       
       lightColor = 'b';
     }

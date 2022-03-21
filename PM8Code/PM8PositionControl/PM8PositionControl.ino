@@ -24,6 +24,8 @@ Servo servo2;
 const int servo1Pin = 9;
 const int servo2Pin = 10;
 
+bool servoMoveComplete[] = {true, true};
+
 //time variables
 unsigned long t_ms = 0;
 double t = 0;                 // current time
@@ -32,8 +34,13 @@ double t_old_mot = 0;         // previous motor sample time
 double Pos = 0;               // current pos
 double Vel = 0;               // current velocity
 double Pos_old = 0;           // previous pos
-double T_enc=0.02;            // sample period in seconds
+double T_enc=0.05;            // sample period in seconds
 double T_motor=0.01;         // motor control sample time
+
+double angVelocity = 30; //deg per second
+double t_motor_old = 0;
+
+double motorDelay = 30.0 / angVelocity * 1000; //converts angular velcoity to miliseconds
 
 //Controller variables
 double Pos_desired = 0;
@@ -62,10 +69,14 @@ char input = ' ';
 #define blue_pin 13
 #define green_pin 12
 #define red_pin 11
+int dataCollected = 0; //Should be readingIndex/3;
+bool sensingComplete = false;
 
+//Variables for measuring how long each loop takes
 double loopSpeed = 0;
 double oldLoopTime = 0;
 double runs = 0;
+
 
 void setup() {
   Serial.begin(9600); 
@@ -111,7 +122,7 @@ void loop() {
   //Reads sensor value and translates that into number of candies in the queue (Qsize). Also sends messages to previous module if needed.
   Qsensing();
 
-  //debugPrinter(2);
+  debugPrinter(5);
 
   communication();
   
@@ -136,6 +147,15 @@ void loop() {
     //Change parameter to 0 if nothing should be printed.
     //debugPrinter(1);
 
+    //If sensing and servo movement is complete, update desired position +30 degrees
+    if(sensingComplete && servoMoveComplete[0] && servoMoveComplete[1] ) {
+      Pos_desired += 30;
+      t_motor_old = t_ms;
+
+      //&& t_ms - motorDelay >= t_motor_old
+    }
+    Serial.println(Pos_desired);
+    
     //Convert voltage to position using PID controller
     double input = PID_controller();
     
