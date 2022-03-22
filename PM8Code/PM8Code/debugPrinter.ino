@@ -22,7 +22,7 @@ void debugPrinter(int type) {
       //print the sensor values as numbers from 0 to 2500, where 0 means maximum reflectance and 2500 means minimum reflectance
       for (uint8_t i = 0; i < SensorCount; i++)
       {
-        
+       
         Serial.print(sensorValues[i]);
         Serial.print('\t');
       }

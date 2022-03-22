@@ -9,6 +9,7 @@ char lightColor = 'b';
  *  Stores RGB values to vals[] array.
  *  
  */
+ 
 void colorSensor() {
 
     Serial.print("R: "); Serial.print(vals[2]);

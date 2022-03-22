@@ -4,8 +4,7 @@ const int mp1 = 6;
 const int mp2 = 7;
 const int mPWM = 5;
 
-
-Encoder myEnc(20,21);
+Encoder myEnc(18,19);
 
 //time variables
 unsigned long t_ms = 0;

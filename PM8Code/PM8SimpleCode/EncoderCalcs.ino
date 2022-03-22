@@ -11,10 +11,10 @@ void EncoderCalcs() {
     Pos = (counts*360.0)/(countsPerRev_motor*GearRatio);   // Position in deg
     Vel = (Pos - Pos_old)/(t - t_old_enc);           // Velocity in deg/sec 
 
-//      Serial.print(t, 5);     // print time; comment out if using the serial plotter
-//      Serial.print(",\t");     // tab command
-//      Serial.print(Pos, 5);   // print position
-//      Serial.print(",\t");
-//      Serial.println(Pos_desired, 5); // print velocity
+ //   Serial.print(t, 5);     // print time; comment out if using the serial plotter
+   // Serial.print(",\t");     // tab command
+    //Serial.print(Pos, 5);   // print position
+    //Serial.print(",\t");
+    //Serial.println(Pos_desired, 5);  // print velocity
   
 }

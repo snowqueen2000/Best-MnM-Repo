@@ -1,4 +1,3 @@
-
 #include <QTRSensors.h>
 #include <Encoder.h>
 #include <Servo.h>
@@ -32,7 +31,7 @@ double t_old_mot = 0;         // previous motor sample time
 double Pos = 0;               // current pos
 double Vel = 0;               // current velocity
 double Pos_old = 0;           // previous pos
-double T_enc=0.02;            // sample period in seconds
+double T_enc=0.05;            // sample period in seconds
 double T_motor=0.01;         // motor control sample time
 
 //Controller variables
@@ -45,6 +44,7 @@ char gate1Slot = 'n';
 char gate2Slot = 'n';
 char gate3Slot = 'n';
 bool stopper = false;
+bool newCand = true;
 
 //queue sensor variables
 int Qsize = 0;
@@ -93,7 +93,7 @@ void setup() {
   pinMode(red_pin, OUTPUT); digitalWrite(red_pin,LOW);
 
 
-  startUp();
+//  startUp();
   
 }
 
@@ -107,7 +107,7 @@ void loop() {
   //Serial.print("Loop speed: ");
   //Serial.println(loopSpeed);
   
-  
+  colorSensor(newCand);
   //Reads sensor value and translates that into number of candies in the queue (Qsize). Also sends messages to previous module if needed.
   Qsensing();
 
@@ -131,7 +131,7 @@ void loop() {
     
     
     //Checks current position and decides which gates to open/close
-    servoChecks();
+//    servoChecks();
 
     //Change parameter to 0 if nothing should be printed.
     //debugPrinter(1);
