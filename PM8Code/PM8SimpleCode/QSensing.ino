@@ -3,7 +3,9 @@
  *    
  * 
  */
- 
+
+//double avgSensorVals[11];  
+//int sensorRuns = 1;
 void Qsensing() {
 
   int mnms = 0;
@@ -16,13 +18,13 @@ void Qsensing() {
       if(sensorValues[1] > 600) {
         if(sensorValues[2] > 600) {
           if(sensorValues[3] > 600) {
-            if(sensorValues[4] > 600) {
+            if(sensorValues[4] > 320) {
               if(sensorValues[5] > 600) {
-                if(sensorValues[6] > 600) {
-                  if(sensorValues[7] > 600) {
+                if(sensorValues[6] > 350) {
+                  if(sensorValues[7] > 500) {
                     if(sensorValues[8] > 600) {
-                      if(sensorValues[9] > 600) {
-                        if(sensorValues[10] > 600) {
+                      if(sensorValues[9] > 400) {
+                        if(sensorValues[10] > 500) {
                           mnms = 0;
                         } else {
                           mnms = 1;
@@ -57,6 +59,11 @@ void Qsensing() {
     } else {
       mnms = 7;
     }
-    
+
+    for(int i = 0; i < 11; i++) {
+      Serial.print(sensorValues[i]); Serial.print(" "); 
+      } 
+      Serial.println();
+      
     Qsize = mnms;
 }

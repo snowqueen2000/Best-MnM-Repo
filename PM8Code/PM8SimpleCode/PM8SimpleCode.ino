@@ -164,7 +164,7 @@ void loop() {
 
 
   if(t > t_colorOld + T_color) {
-    colorSensor();
+//    colorSensor();
     t_colorOld = t;
   }
 
