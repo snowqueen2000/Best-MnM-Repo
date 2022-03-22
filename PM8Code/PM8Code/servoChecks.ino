@@ -35,6 +35,7 @@ void OpenGate2(){
    }
    twoIsOpen = true;
 }
+
 void CloseGate1(){
  for (int pos = 90; pos >= 0; pos -= 1) { 
     servo1.write(pos);                       

@@ -4,7 +4,7 @@
 bool shouldRun = true;
 int j = 0;
 //int tDelay = 18/Vel_DesiredM;
-bool newCand = true;
+// bool newCand = true;
 
 /* Updates the sensor variables when candy is below the sensor, and updates the servo commands when in between the sensor and 1st servo gate.
  * 
@@ -25,7 +25,7 @@ void storeCandies() {
 
   //if 30 deg, update sensing slot
   if((int)floor(Pos)%40 <= 20) {
-    colorSensor(newCand);
+    //colorSensor(newCand);
     senseSlot = input;
     Serial.println("At 30 deg! Running command: ");
     //Serial.print(j);

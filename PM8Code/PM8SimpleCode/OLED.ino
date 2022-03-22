@@ -1,47 +1,42 @@
-
-
-/* Updates the OLED screen. Does not include startup animation.
- *  
- *  Currently displays: 
- *  
- */
- 
-void screen(int type) {
-  
- // for type put 1 to sort Red, 2 to sort Green, and 3 to sort Blue
+// for type put 1 to sort Red, 2 to sort Green, and 3 to sort Blue
 // if no input then it will sort red
 
-  if (type = 1) {
+void OLED(int type, int count) {
+  if (type == 1) {
       display.clearDisplay();
-      display.setTextSize(2);
+      display.setTextSize(1);
       display.setTextColor(WHITE);
       display.setCursor(0,0);
       display.println("Sorting Red!");
+      display.print(count);
+      display.display();
   }
 
-  if (type = 2) {
+  else if (type == 2) {
       display.clearDisplay();
-      display.setTextSize(2);
+      display.setTextSize(1);
       display.setTextColor(WHITE);
       display.setCursor(0,0);
       display.println("Sorting Green!");
+      display.display();
   }
 
-   if (type = 3) {
+   else if (type == 3) {
       display.clearDisplay();
-      display.setTextSize(2);
+      display.setTextSize(1);
       display.setTextColor(WHITE);
       display.setCursor(0,0);
       display.println("Sorting Blue!");
+      display.display();
    }
 
    else {
       display.clearDisplay();
-      display.setTextSize(2);
+      display.setTextSize(1);
       display.setTextColor(WHITE);
       display.setCursor(0,0);
       display.print("Enter 'type' to start sorting");
+      display.display();
   }
 
-}
 }

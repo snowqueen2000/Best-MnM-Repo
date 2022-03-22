@@ -14,19 +14,21 @@ void storeCandy() {
 
   if ((vals[0] < rv[0] && vals[0] > rv[1]) && (vals[1] < rv[2] && vals[1] > rv[3]) && (vals[2] < rv[4] && vals[2] > rv[5]))
   {
-    Serial.println("Is Red!");
-    redM = 1;
+    //Serial.println("Is Red!");
+    display.print("Is Red!");
+    redM = 1;  
+    redCount ++;
   }
   else {
     redM = 0;
   }
 
 
-
   if ((vals[0] < blv[0] && vals[0] > blv[1]) && (vals[1] < blv[2] && vals[1] > blv[3]) && (vals[2] < blv[4] && vals[2] > blv[5]))
   {
     Serial.println("Is Blue!");
     blueM = 1;
+    blueCount ++;
   }
   else
   {
@@ -38,20 +40,20 @@ void storeCandy() {
   {
     Serial.println("Is Green!");;
     greenM = 1;
+    greenCount ++;
   }
   else {
     greenM = 0;
   }
 
-
-  if ((vals[0] < brv[0] && vals[0] > brv[1]) && (vals[1] < brv[2] && vals[1] > brv[3]) && (vals[2] < brv[4] && vals[2] > brv[5]))
-  {
-    Serial.println("Is Brown!");;
-    brownM = 1;
-  }
-  else {
-    brownM = 0;
-  }
+//  if ((vals[0] < brv[0] && vals[0] > brv[1]) && (vals[1] < brv[2] && vals[1] > brv[3]) && (vals[2] < brv[4] && vals[2] > brv[5]))
+//  {
+//    Serial.println("Is Brown!");;
+//    brownM = 1;
+//  }
+//  else {
+//    brownM = 0;
+//  }
 
   if ((vals[0] < yev[0] && vals[0] > yev[1]) && (vals[1] < yev[2] && vals[1] > yev[3]) && (vals[2] < yev[4] && vals[2] > yev[5]))
   {
