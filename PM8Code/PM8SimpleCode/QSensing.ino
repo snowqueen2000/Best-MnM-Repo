@@ -3,7 +3,9 @@
  *    
  * 
  */
- 
+
+//double avgSensorVals[11];  
+//int sensorRuns = 1;
 void Qsensing() {
 
   int mnms = 0;
@@ -12,6 +14,7 @@ void Qsensing() {
   
     //Serial.println("Queue code is running!");
   
+
     if(sensorValues[0] > 400) {
       if(sensorValues[1] > 400) {
         if(sensorValues[2] > 400) {
@@ -23,6 +26,7 @@ void Qsensing() {
                     if(sensorValues[8] > 300) {
                       if(sensorValues[9] > 300) {
                         if(sensorValues[10] > 300) {
+
                           mnms = 0;
                         } else {
                           mnms = 1;
@@ -57,7 +61,12 @@ void Qsensing() {
     } else {
       mnms = 7;
     }
-    
+
+    for(int i = 0; i < 11; i++) {
+      Serial.print(sensorValues[i]); Serial.print(" "); 
+      } 
+      Serial.println();
+      
     Qsize = mnms;
 
 for(int i = 0; i < 11; i++) {
