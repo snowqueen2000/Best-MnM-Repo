@@ -1,0 +1,61 @@
+
+Code for using the color sensor to zero the module:
+
+int initialVals[3];
+bool startupNotComplete = true;
+int allowableError = 20;
+int edgePosition[2];
+
+void startup() {
+
+  for (int i = 0; i < 3; i++) {
+    colorSensor();
+  }
+  
+  //Get initial RGB values from color sensor
+  for (int i = 0; i < 3; i++) {
+    colorSensor();
+    initialVals[i] = vals[i];
+  }
+
+  //rotate until any RGB value changes +- 20
+  while (abs(vals[0] - initialVals[0]) < allowableError && abs(vals[1] - initialVals[1]) < allowableError && abs(vals[2] - initialVals[2]) < allowableError ) {
+    motorCommand(mp1, mp2, mPWM, 3);
+    colorSensor();
+  }
+  //Save that position and stop
+  EncoderCalcs();
+  edgePosition[0] = Pos;
+  motorCommand(mp1, mp2, mPWM, 0);
+  delay(200);
+
+  //Rotate the other direction until any RGB value changes +- 20
+  motorCommand(mp1, mp2, mPWM, -3);
+  delay(100);
+  while (abs(vals[0] - initialVals[0]) < allowableError && abs(vals[1] - initialVals[1]) < allowableError && abs(vals[2] - initialVals[2]) < allowableError ) {
+    motorCommand(mp1, mp2, mPWM, -3);
+    colorSensor();
+  }
+  
+  //Save that position and stop
+  EncoderCalcs();
+  edgePosition[1] = Pos;
+  motorCommand(mp1, mp2, mPWM, 0);
+  delay(200);
+
+  
+  
+  
+  //go to center of those two values
+  while( abs(Pos - (edgePosition[1] + edgePosition[0])/2) > 1) {
+    Serial.println("going to center");
+    double in = PID_controller();
+    motorCommand(mp1, mp2, mPWM, in);
+    EncoderCalcs();
+  }
+  
+  //set Pos to zero
+  Pos = 0;
+  
+  Serial.println("Startup complete!");
+}

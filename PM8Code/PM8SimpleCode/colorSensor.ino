@@ -11,13 +11,14 @@ char lightColor = 'b';
  */
 void colorSensor() {
 
-    Serial.print("R: "); Serial.print(vals[2]);
+
+    Serial.print("B: "); Serial.print(vals[0]);
     Serial.print(" G: "); Serial.print(vals[1]);
-    Serial.print(" B: "); Serial.println(vals[0]);
+    Serial.print(" R: "); Serial.println(vals[2]);
     
     if(lightColor == 'b') {
 
-      vals[0] = analogRead(analogPin); // read phototransistor and store value
+      vals[2] = analogRead(analogPin); // read phototransistor and store value
         //Serial.println(vals[2]); // print stored value.
 
       // set LED color to blue
@@ -30,7 +31,7 @@ void colorSensor() {
       lightColor = 'g';
     } else if(lightColor == 'g') {
 
-      vals[1] = analogRead(analogPin); // read phototransistor and store value
+      vals[0] = analogRead(analogPin); // read phototransistor and store value
         //Serial.print(vals[0]);Serial.print(", "); // print stored value.
 
       // set LED color to green                       
@@ -43,7 +44,7 @@ void colorSensor() {
       lightColor = 'r';
     } else if(lightColor == 'r') {
 
-      vals[2] = analogRead(analogPin); // read phototransistor and store value
+      vals[1] = analogRead(analogPin); // read phototransistor and store value
         //Serial.print(vals[1]);Serial.print(", ");  // print stored value.
 
       // set LED color to Red

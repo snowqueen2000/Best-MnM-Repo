@@ -1,13 +1,5 @@
 
-//bgr:  max, min, max, min, max, min
-int rv[] = {36, 33, 34, 31, 34, 31};
-int blv[] = {32, 28, 32, 29, 37, 34};
-int gv[] = {36, 32, 31, 28, 36, 33};
-int brv[] = {37, 34, 34, 31, 37, 34};
-int yev[] = {36, 33, 31, 28, 32, 29};
-int orv[] = {36, 33, 33, 30, 31, 28};
-int emptyv[] = {};
-int wheelv[] = {};
+
 
 
 int redM;
@@ -33,7 +25,7 @@ void storeCandy() {
 
   if ((vals[0] < blv[0] && vals[0] > blv[1]) && (vals[1] < blv[2] && vals[1] > blv[3]) && (vals[2] < blv[4] && vals[2] > blv[5]))
   {
-    Serial.println("Is Blue!");;
+    Serial.println("Is Blue!");
     blueM = 1;
   }
   else
@@ -59,6 +51,24 @@ void storeCandy() {
   }
   else {
     brownM = 0;
+  }
+
+  if ((vals[0] < yev[0] && vals[0] > yev[1]) && (vals[1] < yev[2] && vals[1] > yev[3]) && (vals[2] < yev[4] && vals[2] > yev[5]))
+  {
+    Serial.println("Is yellow!");;
+    yellowM = 1;
+  }
+  else {
+    yellowM = 0;
+  }
+
+  if ((vals[0] < orv[0] && vals[0] > orv[1]) && (vals[1] < orv[2] && vals[1] > orv[3]) && (vals[2] < orv[4] && vals[2] > orv[5]))
+  {
+    Serial.println("Is Orange!");;
+    orangeM = 1;
+  }
+  else {
+    orangeM = 0;
   }
 
 }
