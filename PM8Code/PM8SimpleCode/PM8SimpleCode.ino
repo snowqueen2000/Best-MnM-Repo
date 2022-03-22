@@ -12,7 +12,9 @@ int colorDetect = 1; // R=1, G=2. B=3
 // OLED Variables
 #define OLED_RESET 4
 Adafruit_SSD1306 display(OLED_RESET);
-const int OLED_Color = 1;
+
+const int OLED_Color = 2;
+
 
 // color sensor
 int redCount = 0;
@@ -87,7 +89,9 @@ double ora[] = {845, 735, 751}; //u
 double empty[] = {852, 766, 860}; //u
 double wheel[] = {};
 
-
+String senseSlot = "empty";
+String gate1 = "empty";
+String gate2 = "empty";
 
 void setup() {
   Serial.begin(9600); 
@@ -164,7 +168,7 @@ void loop() {
 
 
   if(t > t_colorOld + T_color) {
-//    colorSensor();
+    colorSensor();
     t_colorOld = t;
   }
 
@@ -173,15 +177,23 @@ void loop() {
   if(t > T_moveOld + T_movement) {
     //Decide what color candy is under the sensor and which slot it will need to go to
     storeCandy();
+
+    //Assign colors to slots
+    
+    
+    //Move servos
+    servoChecks();
     
     //update the virtual slots
-
-    //Move servos
+    gate2 = gate1;
+    gate1 = senseSlot;
+    
+    
 
     //Move to next position
     Pos_desired += 30;
     T_moveOld = t;
-
+    
     // update OLED
     OLED(OLED_Color);
 
