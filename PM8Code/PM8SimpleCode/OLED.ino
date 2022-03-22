@@ -8,8 +8,8 @@ void OLED(int type) {
       display.setTextColor(WHITE);
       display.setCursor(0,0);
       display.println("Sorting Red!");
-
-      display.println(Qsize);
+      display.print("MnMs in Queue: ");
+      display.print(Qsize);
       display.display();
   }
 
@@ -19,7 +19,8 @@ void OLED(int type) {
       display.setTextColor(WHITE);
       display.setCursor(0,0);
       display.println("Sorting Green!");
-      display.println(Qsize);
+      display.print("MnMs in Queue: ");
+      display.print(Qsize);
       display.display();
   }
 
@@ -29,7 +30,8 @@ void OLED(int type) {
       display.setTextColor(WHITE);
       display.setCursor(0,0);
       display.println("Sorting Blue!");
-      display.println(Qsize);
+      display.print("MnMs in Queue: ");
+      display.print(Qsize);
       display.display();
    }
 
@@ -38,8 +40,8 @@ void OLED(int type) {
       display.setTextSize(1);
       display.setTextColor(WHITE);
       display.setCursor(0,0);
-      display.print("Enter 'type' to start sorting");
+      display.print("Enter color to start sorting");
       display.display();
   }
-
+  
 }
