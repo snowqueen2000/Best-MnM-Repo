@@ -1,13 +1,14 @@
 // for type put 1 to sort Red, 2 to sort Green, and 3 to sort Blue
 // if no input then it will sort red
 
-void OLED(int type) {
+void OLED(int type, int count) {
   if (type == 1) {
       display.clearDisplay();
       display.setTextSize(1);
       display.setTextColor(WHITE);
       display.setCursor(0,0);
       display.println("Sorting Red!");
+      display.print(count);
       display.display();
   }
 

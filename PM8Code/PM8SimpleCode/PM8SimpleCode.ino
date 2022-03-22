@@ -14,6 +14,11 @@ int colorDetect = 1; // R=1, G=2. B=3
 Adafruit_SSD1306 display(OLED_RESET);
 const int OLED_Color = 4;
 
+//
+int redCount = 0;
+int greenCount = 0;
+int blueCount = 0;
+
 //LED variables
 #define blue_pin 13
 #define green_pin 12
@@ -42,7 +47,7 @@ double t_colorOld = 0;
 
 // Controller variables
 double Pos_desired = 0;
-double Vel_desired = 0.3;
+double Vel_desired = 0;
 double error_old = 0;
 
 //Loop speed measurement
