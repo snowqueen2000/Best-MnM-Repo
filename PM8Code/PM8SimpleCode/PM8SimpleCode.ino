@@ -12,9 +12,9 @@ int colorDetect = 1; // R=1, G=2. B=3
 // OLED Variables
 #define OLED_RESET 4
 Adafruit_SSD1306 display(OLED_RESET);
-const int OLED_Color = 4;
+const int OLED_Color = 1;
 
-//
+// color sensor
 int redCount = 0;
 int greenCount = 0;
 int blueCount = 0;
@@ -95,6 +95,11 @@ void setup() {
   pinMode(mp2, OUTPUT); 
 
   int lightError = 50;
+
+  // Initialize Queue sensor 
+  qtr.setTypeRC();
+  qtr.setSensorPins((const uint8_t[]){22,24,26,28,30,32,34,36,38,40,42}, SensorCount);
+  qtr.setEmitterPin(2);
   
   for(int i = 0; i < 6; i+=2) {
     rv[i] = r[i/2] + lightError; 
@@ -134,6 +139,9 @@ void loop() {
   // Serial.print("Loop speed: ");
   // Serial.println(loopSpeed);
 
+  // Queue sensing
+  Qsensing();
+    
   // Only run every timestep
   if (t>t_old_enc+T_enc) {
 
@@ -176,6 +184,7 @@ void loop() {
 
     // update OLED
     OLED(OLED_Color);
+
   }
 
 }
