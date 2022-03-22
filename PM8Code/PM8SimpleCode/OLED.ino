@@ -1,14 +1,14 @@
 // for type put 1 to sort Red, 2 to sort Green, and 3 to sort Blue
 // if no input then it will sort red
 
-void OLED(int type, int count) {
+void OLED(int type) {
   if (type == 1) {
       display.clearDisplay();
       display.setTextSize(1);
       display.setTextColor(WHITE);
       display.setCursor(0,0);
       display.println("Sorting Red!");
-      display.print(count);
+      display.println(Qsize);
       display.display();
   }
 
@@ -18,6 +18,7 @@ void OLED(int type, int count) {
       display.setTextColor(WHITE);
       display.setCursor(0,0);
       display.println("Sorting Green!");
+      display.println(Qsize);
       display.display();
   }
 
@@ -27,6 +28,7 @@ void OLED(int type, int count) {
       display.setTextColor(WHITE);
       display.setCursor(0,0);
       display.println("Sorting Blue!");
+      display.println(Qsize);
       display.display();
    }
 

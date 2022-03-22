@@ -24,11 +24,20 @@ int blueCount = 0;
 #define green_pin 12
 #define red_pin 11
 
+// motor driver 
 const int mPWM = 5;
 const int mp1 = 6;
 const int mp2 = 7;
 
+// encoder
 Encoder myEnc(18,19); // initialize encoder A out --> 18, B out --> 19
+
+// Q sensor
+QTRSensors qtr;
+int Qsize = 0;
+int maxQsize = 5;
+const uint8_t SensorCount = 11;
+uint16_t sensorValues[SensorCount];
 
 // time variables
 unsigned long t_ms = 0;
@@ -58,13 +67,62 @@ double runs = 0;
 //Color sensor variables
 int vals[3];                 // array to store three color reading 
 
+//Color sensor calibartion values
+//bgr:  max, min, max, min, max, min
+double rv[6];
+double blv[6];
+double gv[6];
+double brv[6];
+double yev[6];
+double orv[6];
+double emptyv[6];
+double wheelv[6];
+
+double r[] = {852, 755, 814}; //u
+double bl[] = {757, 700, 863}; //u
+double g[] = {844, 634, 858}; //u
+double br[] = {853, 754, 858}; //u
+double ye[] = {831, 523, 739}; //u
+double ora[] = {845, 735, 751}; //u
+double empty[] = {852, 766, 860}; //u
+double wheel[] = {};
+
+
+
 void setup() {
   Serial.begin(9600); 
   pinMode(mp1, OUTPUT);
   pinMode(mp2, OUTPUT); 
 
+  int lightError = 50;
+  
+  for(int i = 0; i < 6; i+=2) {
+    rv[i] = r[i/2] + lightError; 
+    rv[i+1] = r[i/2] - lightError;
+    blv[i] = bl[i/2] + lightError;
+    blv[i+1] = bl[i/2] - lightError;
+    gv[i] = g[i/2] + lightError;
+    gv[i+1] = g[i/2] - lightError;
+    brv[i] = br[i/2] + lightError;
+    brv[i+1] = br[i/2] - lightError;
+    yev[i] = ye[i/2] + lightError;
+    yev[i+1] = ye[i/2] - lightError;
+    orv[i] = ora[i/2] + lightError;
+    orv[i+1] = ora[i/2] - lightError;
+    emptyv[i] = empty[i/2] + lightError;
+    emptyv[i+1] = empty[i/2] - lightError;
+    
+  }
+  
+  for(int i = 0; i < 6; i++) {
+    Serial.print("Blue max/mins: "); Serial.println(blv[i]);
+  }
+
+  startup();
+
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
   display.clearDisplay();
+
 }
 
 void loop() {
