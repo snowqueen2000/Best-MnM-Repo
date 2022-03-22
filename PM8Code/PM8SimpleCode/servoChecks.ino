@@ -21,7 +21,6 @@ void servoChecks() {
   
 }
 
-
 // Functions
 void OpenGate1(){
   for (int pos = 0; pos <= 90; pos += 1) { 
