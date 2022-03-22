@@ -40,7 +40,6 @@ void colorSensor() {
       digitalWrite(green_pin,HIGH);
       digitalWrite(red_pin,LOW);
 
-
       
       lightColor = 'r';
     } else if(lightColor == 'r') {

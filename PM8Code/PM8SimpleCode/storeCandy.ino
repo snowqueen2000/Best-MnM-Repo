@@ -1,7 +1,4 @@
 
-
-
-
 int redM;
 int blueM;
 int greenM;
@@ -18,6 +15,7 @@ void storeCandy() {
     display.print("Is Red!");
     redM = 1;  
     redCount ++;
+    senseSlot = "red";
   }
   else {
     redM = 0;
@@ -29,6 +27,7 @@ void storeCandy() {
     Serial.println("Is Blue!");
     blueM = 1;
     blueCount ++;
+    senseSlot = "blue";
   }
   else
   {
@@ -41,6 +40,7 @@ void storeCandy() {
     Serial.println("Is Green!");;
     greenM = 1;
     greenCount ++;
+    senseSlot = "green";
   }
   else {
     greenM = 0;
@@ -50,6 +50,7 @@ void storeCandy() {
 //  {
 //    Serial.println("Is Brown!");;
 //    brownM = 1;
+//    senseSlot = "brown";
 //  }
 //  else {
 //    brownM = 0;
@@ -59,6 +60,7 @@ void storeCandy() {
   {
     Serial.println("Is yellow!");;
     yellowM = 1;
+    senseSlot = "yellow";
   }
   else {
     yellowM = 0;
@@ -66,8 +68,9 @@ void storeCandy() {
 
   if ((vals[0] < orv[0] && vals[0] > orv[1]) && (vals[1] < orv[2] && vals[1] > orv[3]) && (vals[2] < orv[4] && vals[2] > orv[5]))
   {
-    Serial.println("Is Orange!");;
+    Serial.println("Is Orange!");
     orangeM = 1;
+    senseSlot = "orange";
   }
   else {
     orangeM = 0;
