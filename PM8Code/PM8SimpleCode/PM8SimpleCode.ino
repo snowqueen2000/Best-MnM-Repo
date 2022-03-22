@@ -24,11 +24,20 @@ int blueCount = 0;
 #define green_pin 12
 #define red_pin 11
 
+// motor driver 
 const int mPWM = 5;
 const int mp1 = 6;
 const int mp2 = 7;
 
+// encoder
 Encoder myEnc(18,19); // initialize encoder A out --> 18, B out --> 19
+
+// Q sensor
+QTRSensors qtr;
+int Qsize = 0;
+int maxQsize = 5;
+const uint8_t SensorCount = 11;
+uint16_t sensorValues[SensorCount];
 
 // time variables
 unsigned long t_ms = 0;

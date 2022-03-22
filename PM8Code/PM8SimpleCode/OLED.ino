@@ -8,7 +8,8 @@ void OLED(int type) {
       display.setTextColor(WHITE);
       display.setCursor(0,0);
       display.println("Sorting Red!");
-      //display.print(count);
+
+      display.println(Qsize);
       display.display();
   }
 
@@ -18,6 +19,7 @@ void OLED(int type) {
       display.setTextColor(WHITE);
       display.setCursor(0,0);
       display.println("Sorting Green!");
+      display.println(Qsize);
       display.display();
   }
 
@@ -27,6 +29,7 @@ void OLED(int type) {
       display.setTextColor(WHITE);
       display.setCursor(0,0);
       display.println("Sorting Blue!");
+      display.println(Qsize);
       display.display();
    }
 
