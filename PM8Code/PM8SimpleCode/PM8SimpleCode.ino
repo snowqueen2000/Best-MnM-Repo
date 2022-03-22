@@ -6,20 +6,21 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 
-// Color detected 
-int colorDetect = 1; // R=1, G=2. B=3
+// Color to sort
+int colorDetect = 3; // R=1, G=2. Bl=3, Br=4, Ye=5, Or=6
 
 // OLED Variables
 #define OLED_RESET 4
 Adafruit_SSD1306 display(OLED_RESET);
 
-const int OLED_Color = 2;
+const int OLED_Color = colorDetect;
 
 
 // color sensor
 int redCount = 0;
 int greenCount = 0;
 int blueCount = 0;
+int candySorted = 0;
 
 //LED variables
 #define blue_pin 13
@@ -33,6 +34,14 @@ const int mp2 = 7;
 
 // encoder
 Encoder myEnc(18,19); // initialize encoder A out --> 18, B out --> 19
+
+//servos
+Servo servo1;
+Servo servo2;
+
+//servo pins
+const int servo1Pin = 9;
+const int servo2Pin = 10;
 
 // Q sensor
 QTRSensors qtr;
@@ -89,14 +98,20 @@ double ora[] = {845, 735, 751}; //u
 double empty[] = {852, 766, 860}; //u
 double wheel[] = {};
 
-String senseSlot = "empty";
-String gate1 = "empty";
-String gate2 = "empty";
+int senseSlot = 0;
+int gate1 = 0;
+int gate2 = 0;
 
 void setup() {
   Serial.begin(9600); 
   pinMode(mp1, OUTPUT);
   pinMode(mp2, OUTPUT); 
+
+  //initialize servos
+  servo1.attach(servo1Pin); 
+  servo2.attach(servo2Pin); 
+  servo1.write(0);              
+  servo2.write(0);
 
   int lightError = 50;
 
@@ -181,8 +196,9 @@ void loop() {
     storeCandy();
 
     //Assign colors to slots
-    
-    
+    Serial.print("senseSlot: "); Serial.println(senseSlot);
+    Serial.print("gate 1: "); Serial.println(gate1);
+    Serial.print("gate 2: "); Serial.println(gate2);
     //Move servos
     servoChecks();
     

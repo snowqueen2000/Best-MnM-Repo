@@ -12,17 +12,17 @@ void Qsensing() {
   
     //Serial.println("Queue code is running!");
   
-    if(sensorValues[0] > 600) {
-      if(sensorValues[1] > 600) {
-        if(sensorValues[2] > 600) {
-          if(sensorValues[3] > 600) {
-            if(sensorValues[4] > 600) {
-              if(sensorValues[5] > 600) {
-                if(sensorValues[6] > 600) {
-                  if(sensorValues[7] > 600) {
-                    if(sensorValues[8] > 600) {
-                      if(sensorValues[9] > 600) {
-                        if(sensorValues[10] > 600) {
+    if(sensorValues[0] > 400) {
+      if(sensorValues[1] > 400) {
+        if(sensorValues[2] > 400) {
+          if(sensorValues[3] > 400) {
+            if(sensorValues[4] > 400) {
+              if(sensorValues[5] > 400) {
+                if(sensorValues[6] > 300) {
+                  if(sensorValues[7] > 300) {
+                    if(sensorValues[8] > 300) {
+                      if(sensorValues[9] > 300) {
+                        if(sensorValues[10] > 300) {
                           mnms = 0;
                         } else {
                           mnms = 1;
@@ -59,4 +59,9 @@ void Qsensing() {
     }
     
     Qsize = mnms;
+
+for(int i = 0; i < 11; i++) {
+Serial.print(sensorValues[i]); Serial.print(" ");
+} Serial.println();
+    
 }

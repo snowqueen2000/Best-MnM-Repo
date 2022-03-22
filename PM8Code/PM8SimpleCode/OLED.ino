@@ -7,9 +7,11 @@ void OLED(int type) {
       display.setTextSize(1);
       display.setTextColor(WHITE);
       display.setCursor(0,0);
-      display.println("Sorting Red!");
+      display.print("Sorting Red: "); display.println(candySorted);
       display.print("MnMs in Queue: ");
       display.print(Qsize);
+      display.print("/");
+      display.println(maxQsize);
       display.display();
   }
 
@@ -18,9 +20,11 @@ void OLED(int type) {
       display.setTextSize(1);
       display.setTextColor(WHITE);
       display.setCursor(0,0);
-      display.println("Sorting Green!");
+      display.print("Sorting Green: "); display.println(candySorted);
       display.print("MnMs in Queue: ");
       display.print(Qsize);
+      display.print("/");
+      display.println(maxQsize);
       display.display();
   }
 
@@ -29,9 +33,11 @@ void OLED(int type) {
       display.setTextSize(1);
       display.setTextColor(WHITE);
       display.setCursor(0,0);
-      display.println("Sorting Blue!");
+      display.print("Sorting Blue: "); display.println(candySorted);
       display.print("MnMs in Queue: ");
       display.print(Qsize);
+      display.print("/");
+      display.println(maxQsize);
       display.display();
    }
 
@@ -43,5 +49,17 @@ void OLED(int type) {
       display.print("Enter color to start sorting");
       display.display();
   }
+  
+}
+
+void oledColor(String c) {
+  
+      //display.setTextSize(1);
+      //display.setTextColor(WHITE);
+      //display.setCursor(0,15);
+      display.print("Sensing: "); display.println(c);
+      display.display();
+
+
   
 }

@@ -5,16 +5,17 @@ bool twoIsOpen = false;
 void servoChecks() {
 
   //Gate 1:
-  if(gate1Slot == 's' && !oneIsOpen) {
+  if(gate1 == colorDetect && !oneIsOpen) {
     OpenGate1();
-  } else if(gate1Slot != 's' && oneIsOpen) {
+    candySorted++;
+  } else if(gate1 != colorDetect && oneIsOpen) {
     CloseGate1();
   }
 
   //Gate 2:
-  if(gate2Slot == 'u' && !twoIsOpen) {
+  if(gate2 != 0 && gate2 != colorDetect && !twoIsOpen) {
     OpenGate2();
-  } else if(gate2Slot != 'u' && twoIsOpen) {
+  } else if(twoIsOpen) {
     CloseGate2();
   }
   
