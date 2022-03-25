@@ -204,8 +204,9 @@ void loop() {
     gate2 = gate1;
     gate1 = senseSlot;
     
+    CloseGate1();
+    CloseGate2();
     
-
     //Move to next position
     Pos_desired += 30;
     T_moveOld = t;
