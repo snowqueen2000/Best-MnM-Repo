@@ -107,6 +107,15 @@ void setup() {
   pinMode(mp1, OUTPUT);
   pinMode(mp2, OUTPUT); 
 
+  pinMode(red_pin, OUTPUT);
+  pinMode(green_pin, OUTPUT);
+  pinMode(blue_pin, OUTPUT);
+
+  //turn off color sensor light
+  digitalWrite(red_pin, HIGH);
+  digitalWrite(green_pin, HIGH);
+  digitalWrite(blue_pin, HIGH);
+  
   //initialize servos
   servo1.attach(servo1Pin); 
   servo2.attach(servo2Pin); 

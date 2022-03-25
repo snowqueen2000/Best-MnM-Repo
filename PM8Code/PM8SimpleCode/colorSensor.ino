@@ -23,9 +23,9 @@ void colorSensor() {
         //Serial.println(vals[2]); // print stored value.
 
       // set LED color to blue
-      digitalWrite(blue_pin, HIGH);   
-      digitalWrite(green_pin,LOW);
-      digitalWrite(red_pin,LOW);
+      digitalWrite(blue_pin, LOW);   
+      digitalWrite(green_pin,HIGH);
+      digitalWrite(red_pin,HIGH);
 
 
       
@@ -36,9 +36,9 @@ void colorSensor() {
         //Serial.print(vals[0]);Serial.print(", "); // print stored value.
 
       // set LED color to green                       
-      digitalWrite(blue_pin,LOW);   
-      digitalWrite(green_pin,HIGH);
-      digitalWrite(red_pin,LOW);
+      digitalWrite(blue_pin,HIGH);   
+      digitalWrite(green_pin,LOW);
+      digitalWrite(red_pin,HIGH);
 
       
       lightColor = 'r';
@@ -48,9 +48,9 @@ void colorSensor() {
         //Serial.print(vals[1]);Serial.print(", ");  // print stored value.
 
       // set LED color to Red
-      digitalWrite(blue_pin,LOW);   
-      digitalWrite(green_pin,LOW);
-      digitalWrite(red_pin,HIGH);
+      digitalWrite(blue_pin,HIGH);   
+      digitalWrite(green_pin,HIGH);
+      digitalWrite(red_pin,LOW);
 
       
       lightColor = 'b';
