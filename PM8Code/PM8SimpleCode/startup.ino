@@ -37,17 +37,17 @@ void startup() {
   calDiff = -calDiff/3;
   
   //Multiply all calibration data by that difference
-  for(int i = 0; i < 6; i++) {
-    rv[i] = rv[i] + calDiff;
-    blv[i] = blv[i] + calDiff;
-    gv[i] = gv[i] + calDiff;
-    brv[i] = brv[i] + calDiff;
-    yev[i] = yev[i] + calDiff;
-    orv[i] = orv[i] + calDiff;
-    emptyv[i] = emptyv[i] + calDiff;
-
-    
-  }
+//  for(int i = 0; i < 6; i++) {
+//    rv[i] = rv[i] + calDiff;
+//    blv[i] = blv[i] + calDiff;
+//    gv[i] = gv[i] + calDiff;
+//    brv[i] = brv[i] + calDiff;
+//    yev[i] = yev[i] + calDiff;
+//    orv[i] = orv[i] + calDiff;
+//    emptyv[i] = emptyv[i] + calDiff;
+//
+//    
+//  }
 
   Serial.println("Sensor calibration complete.");
   Serial.print("difference: "); Serial.println(calDiff);
