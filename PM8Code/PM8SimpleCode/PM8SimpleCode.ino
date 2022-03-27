@@ -9,6 +9,8 @@
 // Color to sort
 int colorDetect = 3; // R=1, G=2. Bl=3, Br=4, Ye=5, Or=6
 
+int deviceAddress;
+
 // OLED Variables
 #define OLED_RESET 4
 Adafruit_SSD1306 display(OLED_RESET);
@@ -89,14 +91,15 @@ double orv[6];
 double emptyv[6];
 double wheelv[6];
 
-double r[] = {852, 755, 814}; //u
-double bl[] = {757, 700, 863}; //u
-double g[] = {844, 634, 858}; //u
-double br[] = {853, 754, 858}; //u
-double ye[] = {831, 523, 739}; //u
-double ora[] = {845, 735, 751}; //u
-double empty[] = {852, 766, 860}; //u
-double wheel[] = {};
+//Color sensor values. See userConfig for values for each person's module.
+double r[3]; //u
+double bl[3]; //u
+double g[3]; //u
+double br[3]; //u
+double ye[3]; //u
+double ora[3]; //u
+double empty[3];
+double wheel[3];
 
 int lightError = 50;
 

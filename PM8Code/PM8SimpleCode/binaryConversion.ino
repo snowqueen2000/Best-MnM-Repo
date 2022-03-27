@@ -14,6 +14,6 @@ int binaryConversion(int leastPin, int midPin, int mostPin) {
     value = value + digitalRead(mostPin) * 4;
   }
 
-  return 0; //stub
+  return value; //stub
   
 }
