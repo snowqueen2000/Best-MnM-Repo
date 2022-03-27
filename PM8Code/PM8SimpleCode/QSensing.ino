@@ -62,10 +62,10 @@ void Qsensing() {
       mnms = 7;
     }
 
-    for(int i = 0; i < 11; i++) {
-      Serial.print(sensorValues[i]); Serial.print(" "); 
-      } 
-      Serial.println();
+//    for(int i = 0; i < 11; i++) {
+//      Serial.print(sensorValues[i]); Serial.print(" "); 
+//      } 
+//      Serial.println();
       
     Qsize = mnms;
     

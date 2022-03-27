@@ -13,9 +13,9 @@ char lightColor = 'b';
 void colorSensor() {
 
 
-//    Serial.print("B: "); Serial.print(vals[0]);
-//    Serial.print(" G: "); Serial.print(vals[1]);
-//    Serial.print(" R: "); Serial.println(vals[2]);
+    Serial.print("B: "); Serial.print(vals[0]);
+    Serial.print(" G: "); Serial.print(vals[1]);
+    Serial.print(" R: "); Serial.println(vals[2]);
     
     if(lightColor == 'b') {
 

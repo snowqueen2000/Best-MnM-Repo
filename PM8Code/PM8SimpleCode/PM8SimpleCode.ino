@@ -102,6 +102,9 @@ int senseSlot = 0;
 int gate1 = 0;
 int gate2 = 0;
 
+//Variable can be changed by ANY OTHER module's estop or previous modulu's queue sensor.
+bool stopSorting = false;
+
 void setup() {
   Serial.begin(9600); 
   pinMode(mp1, OUTPUT);
@@ -159,19 +162,28 @@ void setup() {
 }
 
 void loop() {
+
+  Serial.print("stopSorting: "); Serial.println(stopSorting);
+  
   t_ms = millis();
   t = t_ms / 1000.0;  
 
   //calculate how fast the loop is running
-  loopSpeed = (t_ms - oldLoopTime);
+  //loopSpeed = (t_ms - oldLoopTime);
   // Serial.print("Loop speed: ");
   // Serial.println(loopSpeed);
 
   // Queue sensing
   Qsensing();
-    
+
+  // update OLED
+  OLED(OLED_Color);
+
+  //Send messages to other modules
+  communication();
+  
   // Only run every timestep
-  if (t>t_old_enc+T_enc) {
+  if (t>t_old_enc+T_enc && !stopSorting) {
 
     //Read encoder counts and calculate position/velocity
     EncoderCalcs();
@@ -188,6 +200,13 @@ void loop() {
     // calculations for finding loop speed
     oldLoopTime = t_ms;
     runs++;
+
+
+  }
+
+  //Comand
+  if(stopSorting) {
+    
   }
 
 
@@ -212,7 +231,8 @@ void loop() {
     //update the virtual slots
     gate2 = gate1;
     gate1 = senseSlot;
-    
+
+    //These might need to move to somewhere else if they don't open for long enough.
     CloseGate1();
     CloseGate2();
     
@@ -220,8 +240,7 @@ void loop() {
     Pos_desired += 30;
     T_moveOld = t;
     
-    // update OLED
-    OLED(OLED_Color);
+
 
   }
 
