@@ -98,6 +98,8 @@ double ora[] = {845, 735, 751}; //u
 double empty[] = {852, 766, 860}; //u
 double wheel[] = {};
 
+int lightError = 50;
+
 int senseSlot = 0;
 int gate1 = 0;
 int gate2 = 0;
@@ -124,8 +126,6 @@ void setup() {
   servo2.attach(servo2Pin); 
   servo1.write(0);              
   servo2.write(0);
-
-  int lightError = 50;
 
   // Initialize Queue sensor 
   qtr.setTypeRC();
