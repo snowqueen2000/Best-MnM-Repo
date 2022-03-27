@@ -17,7 +17,6 @@ Adafruit_SSD1306 display(OLED_RESET);
 
 const int OLED_Color = colorDetect;
 
-
 // color sensor
 int redCount = 0;
 int greenCount = 0;
@@ -180,7 +179,7 @@ void loop() {
   Qsensing();
 
   // update OLED
-  OLED(OLED_Color);
+  //OLED(OLED_Color);
 
   //Send messages to other modules
   communication();
@@ -195,7 +194,7 @@ void loop() {
     double input = PID_controller();
     
     //Send command to motor
-    motorCommand(mp1, mp2, mPWM, input);
+    //motorCommand(mp1, mp2, mPWM, input);
 
     Pos_old = Pos;
     t_old_enc = t; //save current time and position
