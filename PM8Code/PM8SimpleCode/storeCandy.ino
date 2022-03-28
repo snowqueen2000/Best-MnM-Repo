@@ -1,10 +1,6 @@
 
 
 void storeCandy() {
-
-  if(Serial.available() > 0) {
-    senseSlot = Serial.read();
-  }
   
   // R=1, G=2. Bl=3, Br=4, Ye=5, Or=6
   if ((vals[0] < rv[0] && vals[0] > rv[1]) && (vals[1] < rv[2] && vals[1] > rv[3]) && (vals[2] < rv[4] && vals[2] > rv[5]))

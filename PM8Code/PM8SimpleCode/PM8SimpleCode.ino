@@ -100,8 +100,6 @@ double ora[3]; //u
 double empty[3];
 double wheel[3];
 
-int lightError = 50;
-
 int senseSlot = 0;
 int gate1 = 0;
 int gate2 = 0;
@@ -136,22 +134,22 @@ void setup() {
   qtr.setSensorPins((const uint8_t[]){22,24,26,28,30,32,34,36,38,40,42}, SensorCount);
   qtr.setEmitterPin(2);
   
-  for(int i = 0; i < 6; i+=2) {
-    rv[i] = r[i/2] + lightError; 
-    rv[i+1] = r[i/2] - lightError;
-    blv[i] = bl[i/2] + lightError;
-    blv[i+1] = bl[i/2] - lightError;
-    gv[i] = g[i/2] + lightError;
-    gv[i+1] = g[i/2] - lightError;
-    brv[i] = br[i/2] + lightError;
-    brv[i+1] = br[i/2] - lightError;
-    yev[i] = ye[i/2] + lightError;
-    yev[i+1] = ye[i/2] - lightError;
-    orv[i] = ora[i/2] + lightError;
-    orv[i+1] = ora[i/2] - lightError;
-    emptyv[i] = empty[i/2] + lightError;
-    emptyv[i+1] = empty[i/2] - lightError;
-  }
+//  for(int i = 0; i < 6; i+=2) {
+//    rv[i] = r[i/2] + lightError; 
+//    rv[i+1] = r[i/2] - lightError;
+//    blv[i] = bl[i/2] + lightError;
+//    blv[i+1] = bl[i/2] - lightError;
+//    gv[i] = g[i/2] + lightError;
+//    gv[i+1] = g[i/2] - lightError;
+//    brv[i] = br[i/2] + lightError;
+//    brv[i+1] = br[i/2] - lightError;
+//    yev[i] = ye[i/2] + lightError;
+//    yev[i+1] = ye[i/2] - lightError;
+//    orv[i] = ora[i/2] + lightError;
+//    orv[i+1] = ora[i/2] - lightError;
+//    emptyv[i] = empty[i/2] + lightError;
+//    emptyv[i+1] = empty[i/2] - lightError;
+//  }
   
   for(int i = 0; i < 6; i++) {
     Serial.print("Blue max/mins: "); Serial.println(blv[i]);
@@ -166,7 +164,7 @@ void setup() {
 
 void loop() {
 
-  Serial.print("stopSorting: "); Serial.println(stopSorting);
+  //Serial.print("stopSorting: "); Serial.println(stopSorting);
   
   t_ms = millis();
   t = t_ms / 1000.0;  
@@ -221,6 +219,10 @@ void loop() {
 
   //Rotate to next 30 degree slot
   if(t > T_moveOld + T_movement) {
+
+    CloseGate1();
+    CloseGate2();
+    
     //Decide what color candy is under the sensor and which slot it will need to go to
     storeCandy();
 

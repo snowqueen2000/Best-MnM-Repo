@@ -12,95 +12,103 @@ void userConfig() {
   if (user == "Tren") {
 
 
-    double rt[] = {852, 755, 814};
-    double blt[] = {757, 700, 863};
-    double gt[] = {844, 634, 858};
-    double brt[] = {853, 754, 858};
-    double yet[] = {831, 523, 739};
-    double orat[] = {845, 735, 751};
-    double emptyt[] = {852, 766, 860};
-    double wheelt[] = {0, 0, 0};
+    double rt[] = {852, 755, 814, 0, 0, 0};
+    double blt[] = {757, 700, 863, 0, 0, 0};
+    double gt[] = {844, 634, 858, 0, 0, 0};
+    double brt[] = {853, 754, 858, 0, 0, 0};
+    double yet[] = {831, 523, 739, 0, 0, 0};
+    double orat[] = {845, 735, 751, 0, 0, 0};
+    double emptyt[] = {852, 766, 860, 0, 0, 0};
+    double wheelt[] = {0, 0, 0, 0, 0, 0};
+
+    int lightError = 50;
 
     deviceAddress = 0;
 
-    memcpy(r, rt, 3);
-    memcpy(bl, blt, 3);
-    memcpy(g, gt, 3);
-    memcpy(br, brt, 3);
-    memcpy(ye, yet, 3);
-    memcpy(ora, orat, 3);
-    memcpy(empty, emptyt, 3);
-    memcpy(wheel, wheelt, 3);
+    memcpy(rv, rt, 6);
+    memcpy(blv, blt, 6);
+    memcpy(gv, gt, 6);
+    memcpy(brv, brt, 6);
+    memcpy(yev, yet, 6);
+    memcpy(orav, orat, 6);
+    memcpy(emptyv, emptyt, 6);
+    memcpy(wheelv, wheelt, 6);
 
   } else if (user == "Arham") {
 
 
-    double rt[] = {852, 755, 814};
-    double blt[] = {757, 700, 863};
-    double gt[] = {844, 634, 858};
-    double brt[] = {853, 754, 858};
-    double yet[] = {831, 523, 739};
-    double orat[] = {845, 735, 751};
-    double emptyt[] = {852, 766, 860};
-    double wheelt[] = {0, 0, 0};
+    double rt[] = {852, 755, 814, 0, 0, 0};
+    double blt[] = {757, 700, 863, 0, 0, 0};
+    double gt[] = {844, 634, 858, 0, 0, 0};
+    double brt[] = {853, 754, 858, 0, 0, 0};
+    double yet[] = {831, 523, 739, 0, 0, 0};
+    double orat[] = {845, 735, 751, 0, 0, 0};
+    double emptyt[] = {852, 766, 860, 0, 0, 0};
+    double wheelt[] = {0, 0, 0, 0, 0, 0};
+
+    int lightError = 50;
 
     deviceAddress = 1;
 
-    memcpy(r, rt, 3);
-    memcpy(bl, blt, 3);
-    memcpy(g, gt, 3);
-    memcpy(br, brt, 3);
-    memcpy(ye, yet, 3);
-    memcpy(ora, orat, 3);
-    memcpy(empty, emptyt, 3);
-    memcpy(wheel, wheelt, 3);
+    memcpy(rv, rt, 6);
+    memcpy(blv, blt, 6);
+    memcpy(gv, gt, 6);
+    memcpy(brv, brt, 6);
+    memcpy(yev, yet, 6);
+    memcpy(orav, orat, 6);
+    memcpy(emptyv, emptyt, 6);
+    memcpy(wheelv, wheelt, 6);
 
 
   } else if (user == "Audrey") {
 
-    double rt[] = {852, 755, 814}; 
-    double blt[] = {757, 700, 863}; 
-    double gt[] = {844, 634, 858}; 
-    double brt[] = {853, 754, 858}; 
-    double yet[] = {831, 523, 739}; 
-    double orat[] = {845, 735, 751}; 
-    double emptyt[] = {852, 766, 860}; 
-    double wheelt[] = {0,0,0};
+    double rt[] = {852, 755, 814, 0, 0, 0};
+    double blt[] = {757, 700, 863, 0, 0, 0};
+    double gt[] = {844, 634, 858, 0, 0, 0};
+    double brt[] = {853, 754, 858, 0, 0, 0};
+    double yet[] = {831, 523, 739, 0, 0, 0};
+    double orat[] = {845, 735, 751, 0, 0, 0};
+    double emptyt[] = {852, 766, 860, 0, 0, 0};
+    double wheelt[] = {0, 0, 0, 0, 0, 0};
+
+    int lightError = 50;
 
     deviceAddress = 2;
 
-    memcpy(r, rt, 3);
-    memcpy(bl, blt, 3);
-    memcpy(g, gt, 3);
-    memcpy(br, brt, 3);
-    memcpy(ye, yet, 3);
-    memcpy(ora, orat, 3);
-    memcpy(empty, emptyt, 3);
-    memcpy(wheel, wheelt, 3);
+    memcpy(rv, rt, 6);
+    memcpy(blv, blt, 6);
+    memcpy(gv, gt, 6);
+    memcpy(brv, brt, 6);
+    memcpy(yev, yet, 6);
+    memcpy(orav, orat, 6);
+    memcpy(emptyv, emptyt, 6);
+    memcpy(wheelv, wheelt, 6);
 
 
   } else if (user == "Omar") {
 
 
-    double rt[] = {852, 755, 814}; 
-    double blt[] = {757, 700, 863}; 
-    double gt[] = {844, 634, 858}; 
-    double brt[] = {853, 754, 858}; 
-    double yet[] = {831, 523, 739}; 
-    double orat[] = {845, 735, 751}; 
-    double emptyt[] = {852, 766, 860}; 
-    double wheelt[] = {0,0,0};
+    double rt[] = {852, 755, 814, 0, 0, 0};
+    double blt[] = {757, 700, 863, 0, 0, 0};
+    double gt[] = {844, 634, 858, 0, 0, 0};
+    double brt[] = {853, 754, 858, 0, 0, 0};
+    double yet[] = {831, 523, 739, 0, 0, 0};
+    double orat[] = {845, 735, 751, 0, 0, 0};
+    double emptyt[] = {852, 766, 860, 0, 0, 0};
+    double wheelt[] = {0, 0, 0, 0, 0, 0};
+
+    int lightError = 50;
 
     deviceAddress = 3;
 
-    memcpy(r, rt, 3);
-    memcpy(bl, blt, 3);
-    memcpy(g, gt, 3);
-    memcpy(br, brt, 3);
-    memcpy(ye, yet, 3);
-    memcpy(ora, orat, 3);
-    memcpy(empty, emptyt, 3);
-    memcpy(wheel, wheelt, 3);
+    memcpy(rv, rt, 6);
+    memcpy(blv, blt, 6);
+    memcpy(gv, gt, 6);
+    memcpy(brv, brt, 6);
+    memcpy(yev, yet, 6);
+    memcpy(orav, orat, 6);
+    memcpy(emptyv, emptyt, 6);
+    memcpy(wheelv, wheelt, 6);
 
   }
 
