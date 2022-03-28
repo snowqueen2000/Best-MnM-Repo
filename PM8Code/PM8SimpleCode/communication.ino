@@ -23,7 +23,7 @@ void communication() {
   }
 
   //Measure voltage on 5v bus to determine if estop is triggered and tell other modules to stop
-  if(analogRead(estopTriggerPin) < 150) {
+  if(analogRead(estopTriggerPin) < 300) {
     digitalWrite(estopOutPin, HIGH);
   } else {
     digitalWrite(estopOutPin, LOW);

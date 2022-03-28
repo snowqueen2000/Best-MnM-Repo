@@ -58,6 +58,8 @@ void startup() {
   int configStartTime = millis();
   int commAddress;
 
+  digitalWrite(configPins[8], LOW);
+  
   //wait until configuration recieved, or until 5 seconds have passed. NEED TO ADD START BUTTON
   while(millis() < configStartTime + waitTime && commAddress != deviceAddress) {
 
@@ -68,6 +70,7 @@ void startup() {
   if(millis() < configStartTime + waitTime) {
     colorDetect = binaryConversion(configPins[4], configPins[3], configPins[2]);
     maxQsize = binaryConversion(configPins[7], configPins[6], configPins[5]);
+    Serial.println("Coms working");
   }
   
 }
