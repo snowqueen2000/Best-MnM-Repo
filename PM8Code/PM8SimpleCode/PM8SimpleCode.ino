@@ -139,20 +139,19 @@ void setup() {
   
   for(int i = 0; i < 6; i+=2) {
     rv[i] = r[i/2] + lightError; 
-    rv[i+1] = r[i/2 +1] - lightError;
+    rv[i+1] = r[i/2] - lightError;
     blv[i] = bl[i/2] + lightError;
-    blv[i+1] = bl[i/2 +1] - lightError;
+    blv[i+1] = bl[i/2] - lightError;
     gv[i] = g[i/2] + lightError;
-    gv[i+1] = g[i/2 + 1] - lightError;
+    gv[i+1] = g[i/2] - lightError;
     brv[i] = br[i/2] + lightError;
-    brv[i+1] = br[i/2 + 1] - lightError;
+    brv[i+1] = br[i/2] - lightError;
     yev[i] = ye[i/2] + lightError;
-    yev[i+1] = ye[i/2 + 1] - lightError;
+    yev[i+1] = ye[i/2] - lightError;
     orv[i] = ora[i/2] + lightError;
-    orv[i+1] = ora[i/2 + 1] - lightError;
+    orv[i+1] = ora[i/2] - lightError;
     emptyv[i] = empty[i/2] + lightError;
-    emptyv[i+1] = empty[i/2 + 1] - lightError;
-    
+    emptyv[i+1] = empty[i/2] - lightError;
   }
   
   for(int i = 0; i < 6; i++) {

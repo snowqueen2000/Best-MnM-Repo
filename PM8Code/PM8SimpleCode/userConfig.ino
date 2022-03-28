@@ -1,5 +1,8 @@
 
 String user = "Tren"; //CHANGE THIS AFTER PULLING
+//String user = "Arham";
+//String user = "Omar";
+//String user = "Audrey";
 
 /* Changes color sensor config and device adress for each team member.
 
