@@ -59,7 +59,7 @@ void startup() {
   int commAddress;
 
   digitalWrite(configPins[8], LOW);
-  
+
   //wait until configuration recieved, or until 5 seconds have passed. NEED TO ADD START BUTTON
   while(millis() < configStartTime + waitTime && commAddress != deviceAddress) {
 
