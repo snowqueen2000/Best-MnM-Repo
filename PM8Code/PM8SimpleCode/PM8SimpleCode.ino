@@ -118,6 +118,8 @@ void setup() {
   pinMode(green_pin, OUTPUT);
   pinMode(blue_pin, OUTPUT);
 
+  pinMode(A1, INPUT);
+
   //turn off color sensor light
   digitalWrite(red_pin, HIGH);
   digitalWrite(green_pin, HIGH);
@@ -149,7 +151,6 @@ void setup() {
     orv[i+1] = ora[i/2] - lightError;
     emptyv[i] = empty[i/2] + lightError;
     emptyv[i+1] = empty[i/2] - lightError;
-    
   }
   
   for(int i = 0; i < 6; i++) {
