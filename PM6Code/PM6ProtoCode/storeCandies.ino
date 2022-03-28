@@ -3,7 +3,7 @@
 //This variable ensures that the array updates only once.
 bool shouldRun = true;
 int j = 0;
-int tDelay = 18/Vel_DesiredM;
+// int tDelay = 18/Vel_DesiredM;
 
 void storeCandies() {
 
