@@ -3,7 +3,9 @@
 //This variable ensures that the array updates only once.
 bool shouldRun = true;
 int j = 0;
-// int tDelay = 18/Vel_DesiredM;
+
+//int tDelay = 18/Vel_DesiredM;
+
 
 void storeCandies() {
 
@@ -22,9 +24,9 @@ void storeCandies() {
   //if 30 deg, update sensing slot
   if((int)floor(Pos)%35 <= 10) {
     senseSlot = input[j];
-    Serial.print("At 30 deg! Running command: ");
-    Serial.print(j);
-    Serial.println(input[j]);
+    //Serial.print("At 30 deg! Running command: ");
+    //Serial.print(j);
+    //Serial.println(input[j]);
     shouldRun = true;
   }
   
@@ -34,7 +36,7 @@ void storeCandies() {
     gate3Slot = gate2Slot;
     gate2Slot = gate1Slot;
     gate1Slot = senseSlot;
-    Serial.println("array has updated");
+    //Serial.println("array has updated");
     shouldRun = false;
     j = j+1;
   }

@@ -7,8 +7,8 @@ int pos = 0;
 
 void setup() {
   //Serial.begin(9600);
-  servoW.attach(7); // white wire to digital pin 7
-  servoG.attach(8); // grey wire to digital pin 8
+  servoW.attach(10); // white wire to digital pin 10
+  servoG.attach(9); // grey wire to digital pin 9
 }
 
 void loop() {
