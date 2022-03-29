@@ -101,12 +101,12 @@ int vals[3];                 // array to store three color reading
 //double empty[] = {852, 766, 860}; //u
 //double wheel[] = {};
 
-double rv[] = {700,500,100,0,100,0}; //u
-double blv[] = {100, 0, 100,0,700,500}; //u
-double gv[] = {600, 400,100,0,700,500}; //u 
-double brv[] = {853, 754, 858,0,0,0}; //u  
-double yev[] = {831, 523, 739,0,0,0}; //u  
-double orv[] = {845, 735, 751,0,0,0}; //u
+double rv[] = {999,983,988,985,988,983}; //u BGR
+double blv[] = {993, 984, 995, 989, 998,989}; //u
+double gv[] = {1007, 988,1001,989,991,987}; //u 
+double brv[] = {988,984,999,988,1014,991}; //u  
+double yev[] = {997, 987, 994, 989, 1009, 989}; //u  
+double orv[] = {993, 984, 1005,988,991,988}; //u
 double emptyv[] = {852, 766, 860,0,0,0}; //u
 double wheelv[] = {};
 
