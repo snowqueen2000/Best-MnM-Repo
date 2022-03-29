@@ -193,7 +193,7 @@ void loop() {
     double input = PID_controller();
     
     //Send command to motor
-    //motorCommand(mp1, mp2, mPWM, input);
+    motorCommand(mp1, mp2, mPWM, input);
 
     Pos_old = Pos;
     t_old_enc = t; //save current time and position
