@@ -7,15 +7,14 @@
 #include <Adafruit_SSD1306.h>
 
 // Color to sort
-int colorDetect = 3; // R=1, G=2. Bl=3, Br=4, Ye=5, Or=6
-
-int deviceAddress;
+int colorDetect = 1; // R=1, G=2. Bl=3, Br=4, Ye=5, Or=6
 
 // OLED Variables
 #define OLED_RESET 4
 Adafruit_SSD1306 display(OLED_RESET);
 
 const int OLED_Color = colorDetect;
+
 
 // color sensor
 int redCount = 0;
@@ -65,6 +64,9 @@ double T_movement = 3;      // Movement Delay in seconds
 double T_moveOld = 0;
 double T_color = 0.04;
 double t_colorOld = 0;
+double T_oled=3;
+double t_old_oled=0;
+
 
 // Controller variables
 double Pos_desired = 0;
@@ -81,24 +83,34 @@ int vals[3];                 // array to store three color reading
 
 //Color sensor calibartion values
 //bgr:  max, min, max, min, max, min
-double rv[6];
-double blv[6];
-double gv[6];
-double brv[6];
-double yev[6];
-double orv[6];
-double emptyv[6];
-double wheelv[6];
+//double rv[6];           //comment for test
+//double blv[6];
+//double gv[6];
+//double brv[6];
+//double yev[6];
+//double orv[6];
+//double emptyv[6];
+//double wheelv[6];
 
-//Color sensor values. See userConfig for values for each person's module.
-double r[3]; //u
-double bl[3]; //u
-double g[3]; //u
-double br[3]; //u
-double ye[3]; //u
-double ora[3]; //u
-double empty[3];
-double wheel[3];
+//double r[] = {650, 650, 100}; //u       //comment for test 
+//double bl[] = {757, 700, 863}; //u
+//double g[] = {844, 634, 858}; //u
+//double br[] = {853, 754, 858}; //u
+//double ye[] = {831, 523, 739}; //u
+//double ora[] = {845, 735, 751}; //u
+//double empty[] = {852, 766, 860}; //u
+//double wheel[] = {};
+
+double rv[] = {700,500,100,0,100,0}; //u
+double blv[] = {100, 0, 100,0,700,500}; //u
+double gv[] = {600, 400,100,0,700,500}; //u 
+double brv[] = {853, 754, 858,0,0,0}; //u  
+double yev[] = {831, 523, 739,0,0,0}; //u  
+double orv[] = {845, 735, 751,0,0,0}; //u
+double emptyv[] = {852, 766, 860,0,0,0}; //u
+double wheelv[] = {};
+
+int lightError = 100;
 
 int senseSlot = 0;
 int gate1 = 0;
@@ -116,8 +128,6 @@ void setup() {
   pinMode(green_pin, OUTPUT);
   pinMode(blue_pin, OUTPUT);
 
-  pinMode(A1, INPUT);
-
   //turn off color sensor light
   digitalWrite(red_pin, HIGH);
   digitalWrite(green_pin, HIGH);
@@ -134,7 +144,7 @@ void setup() {
   qtr.setSensorPins((const uint8_t[]){22,24,26,28,30,32,34,36,38,40,42}, SensorCount);
   qtr.setEmitterPin(2);
   
-//  for(int i = 0; i < 6; i+=2) {
+//  for(int i = 0; i < 6; i+=2) {       //comment for test 
 //    rv[i] = r[i/2] + lightError; 
 //    rv[i+1] = r[i/2] - lightError;
 //    blv[i] = bl[i/2] + lightError;
@@ -149,6 +159,7 @@ void setup() {
 //    orv[i+1] = ora[i/2] - lightError;
 //    emptyv[i] = empty[i/2] + lightError;
 //    emptyv[i+1] = empty[i/2] - lightError;
+//    
 //  }
   
   for(int i = 0; i < 6; i++) {
@@ -193,7 +204,7 @@ void loop() {
     double input = PID_controller();
     
     //Send command to motor
-    //motorCommand(mp1, mp2, mPWM, input);
+    motorCommand(mp1, mp2, mPWM, input);
 
     Pos_old = Pos;
     t_old_enc = t; //save current time and position
@@ -202,9 +213,14 @@ void loop() {
     oldLoopTime = t_ms;
     runs++;
 
-
   }
-
+  
+// OLED Timing
+//if (t>t_old_oled+T_oled) {
+//OLED(OLED_Color);
+//t_old_oled=t;
+//  
+//}
   //Comand
   if(stopSorting) {
     
@@ -220,12 +236,14 @@ void loop() {
   //Rotate to next 30 degree slot
   if(t > T_moveOld + T_movement) {
 
+    //These might need to move to somewhere else if they don't open for long enough.
     CloseGate1();
     CloseGate2();
     
     //Decide what color candy is under the sensor and which slot it will need to go to
+    OLED(OLED_Color);
     storeCandy();
-
+    colorSensor();
     //Assign colors to slots
     Serial.print("senseSlot: "); Serial.println(senseSlot);
     Serial.print("gate 1: "); Serial.println(gate1);
@@ -237,9 +255,7 @@ void loop() {
     gate2 = gate1;
     gate1 = senseSlot;
 
-    //These might need to move to somewhere else if they don't open for long enough.
-    CloseGate1();
-    CloseGate2();
+
     
     //Move to next position
     Pos_desired += 30;

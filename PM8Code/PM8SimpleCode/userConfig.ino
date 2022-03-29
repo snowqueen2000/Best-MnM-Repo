@@ -30,7 +30,7 @@ void userConfig() {
     memcpy(gv, gt, 6);
     memcpy(brv, brt, 6);
     memcpy(yev, yet, 6);
-    memcpy(orav, orat, 6);
+    memcpy(orv, orat, 6);
     memcpy(emptyv, emptyt, 6);
     memcpy(wheelv, wheelt, 6);
 
@@ -55,7 +55,7 @@ void userConfig() {
     memcpy(gv, gt, 6);
     memcpy(brv, brt, 6);
     memcpy(yev, yet, 6);
-    memcpy(orav, orat, 6);
+    memcpy(orv, orat, 6);
     memcpy(emptyv, emptyt, 6);
     memcpy(wheelv, wheelt, 6);
 
@@ -80,7 +80,7 @@ void userConfig() {
     memcpy(gv, gt, 6);
     memcpy(brv, brt, 6);
     memcpy(yev, yet, 6);
-    memcpy(orav, orat, 6);
+    memcpy(orv, orat, 6);
     memcpy(emptyv, emptyt, 6);
     memcpy(wheelv, wheelt, 6);
 
@@ -106,7 +106,7 @@ void userConfig() {
     memcpy(gv, gt, 6);
     memcpy(brv, brt, 6);
     memcpy(yev, yet, 6);
-    memcpy(orav, orat, 6);
+    memcpy(orv, orat, 6);
     memcpy(emptyv, emptyt, 6);
     memcpy(wheelv, wheelt, 6);
 
