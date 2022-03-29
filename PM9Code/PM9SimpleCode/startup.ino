@@ -6,6 +6,9 @@ double calDiff;
  *  Also closes servo gates.
  * Assumes that the module starts over an empty hole
  */
+
+int configPins[] = {31,33,35,37,39,41,43,45,47};
+ 
 void startup() {
 
   Serial.println("Starting sensor calibration in 3 seconds");
@@ -45,5 +48,33 @@ void startup() {
 
   Serial.println("Sensor calibration complete.");
   Serial.print("difference: "); Serial.println(calDiff);
+
+
+
+
+    Serial.println("\nWaiting for configuration, or 5 seconds...");
+
+  int waitTime = 5000;
+  int configStartTime = millis();
+  int commAddress;
+
+  digitalWrite(configPins[8], LOW);
+
+  //wait until configuration recieved, or until 5 seconds have passed. NEED TO ADD START BUTTON
+  while(millis() < configStartTime + waitTime && commAddress != deviceAddress) {
+
+    commAddress = binaryConversion(configPins[1], configPins[0], 0);
+    
+  }
+
+  if(millis() < configStartTime + waitTime) {
+    colorDetect = binaryConversion(configPins[4], configPins[3], configPins[2]);
+    maxQsize = binaryConversion(configPins[7], configPins[6], configPins[5]);
+    Serial.println("Coms working");
+  }
+
+
+
+
   
 }

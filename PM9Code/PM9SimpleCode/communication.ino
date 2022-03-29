@@ -16,7 +16,7 @@ int estopTriggerPin = A1; //MAY NEED TO CHANGE THIS PIN
 void communication() {
 
   
-Serial.println(analogRead(estopTriggerPin));
+//Serial.println(analogRead(estopTriggerPin));
 
 
   //Tell previous module to stop sending MnMs if queue is full
