@@ -11,9 +11,6 @@ int configPins[] = {31,33,35,37,39,41,43,45,47};
  
 void startup() {
 
-  //Configures the module for each user
-  userConfig();
-
   Serial.println("Starting sensor calibration in 3 seconds");
   delay(1000);
   CloseGate1();
@@ -52,7 +49,10 @@ void startup() {
   Serial.println("Sensor calibration complete.");
   Serial.print("difference: "); Serial.println(calDiff);
 
-  Serial.println("\nWaiting for configuration, or 5 seconds...");
+
+
+
+    Serial.println("\nWaiting for configuration, or 5 seconds...");
 
   int waitTime = 5000;
   int configStartTime = millis();
@@ -72,5 +72,9 @@ void startup() {
     maxQsize = binaryConversion(configPins[7], configPins[6], configPins[5]);
     Serial.println("Coms working");
   }
+
+
+
+
   
 }

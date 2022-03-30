@@ -5,7 +5,7 @@ int commInPin = 52;
 
 //these pins are connected to each other and the estop pins on every other module. Copper tape?
 int estopOutPin = 53;
-int estopInPin = 51;
+int estopInPin = 48;
 
 int estopTriggerPin = A1; //MAY NEED TO CHANGE THIS PIN
 
@@ -14,6 +14,10 @@ int estopTriggerPin = A1; //MAY NEED TO CHANGE THIS PIN
  */
  
 void communication() {
+
+  
+//Serial.println(analogRead(estopTriggerPin));
+
 
   //Tell previous module to stop sending MnMs if queue is full
   if(Qsize >= maxQsize) {

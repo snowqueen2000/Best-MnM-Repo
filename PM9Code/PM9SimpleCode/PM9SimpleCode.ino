@@ -6,16 +6,17 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 
+//CHANGE FOR EACH PERSON
+int deviceAddress = 1;
 // Color to sort
-int colorDetect = 3; // R=1, G=2. Bl=3, Br=4, Ye=5, Or=6
-
-int deviceAddress;
+int colorDetect = 1; // R=1, G=2. Bl=3, Br=4, Ye=5, Or=6
 
 // OLED Variables
 #define OLED_RESET 4
 Adafruit_SSD1306 display(OLED_RESET);
 
 const int OLED_Color = colorDetect;
+
 
 // color sensor
 int redCount = 0;
@@ -32,6 +33,11 @@ int candySorted = 0;
 const int mPWM = 5;
 const int mp1 = 6;
 const int mp2 = 7;
+
+//Hopper motor pins
+const int hopPWM = 3;
+const int hop1 = 1;
+const int hop2 = 2;
 
 // encoder
 Encoder myEnc(18,19); // initialize encoder A out --> 18, B out --> 19
@@ -65,6 +71,9 @@ double T_movement = 3;      // Movement Delay in seconds
 double T_moveOld = 0;
 double T_color = 0.04;
 double t_colorOld = 0;
+double T_oled=3;
+double t_old_oled=0;
+
 
 // Controller variables
 double Pos_desired = 0;
@@ -81,24 +90,53 @@ int vals[3];                 // array to store three color reading
 
 //Color sensor calibartion values
 //bgr:  max, min, max, min, max, min
-double rv[6];
-double blv[6];
-double gv[6];
-double brv[6];
-double yev[6];
-double orv[6];
-double emptyv[6];
-double wheelv[6];
+//double rv[6];           //comment for test
+//double blv[6];
+//double gv[6];
+//double brv[6];
+//double yev[6];
+//double orv[6];
+//double emptyv[6];
+//double wheelv[6];
 
-//Color sensor values. See userConfig for values for each person's module.
-double r[3]; //u
-double bl[3]; //u
-double g[3]; //u
-double br[3]; //u
-double ye[3]; //u
-double ora[3]; //u
-double empty[3];
-double wheel[3];
+
+//double r[] = {650, 650, 100}; //u       //comment for test 
+//double bl[] = {757, 700, 863}; //u
+//double g[] = {844, 634, 858}; //u
+//double br[] = {853, 754, 858}; //u
+//double ye[] = {831, 523, 739}; //u
+//double ora[] = {845, 735, 751}; //u
+//double empty[] = {852, 766, 860}; //u
+//double wheel[] = {};
+
+double rv[] = {999,983,988,985,988,983}; //u BGR
+double blv[] = {993, 984, 995, 989, 998,989}; //u
+double gv[] = {1007, 988,1001,989,991,987}; //u 
+double brv[] = {988,984,999,988,1014,991}; //u  
+double yev[] = {997, 987, 994, 989, 1009, 989}; //u  
+double orv[] = {993, 984, 1005,988,991,988}; //u
+double emptyv[] = {852, 766, 860,0,0,0}; //u
+
+double r[] = {31, 31, 23}; //u       //comment for test 
+double bl[] = {21, 25, 35}; //u
+double g[] = {28, 22, 30}; //u
+double br[] = {30, 33, 31}; //u
+double ye[] = {28, 21, 20}; //u
+double ora[] = {30, 34, 20}; //u
+double empty[] = {48, 49, 45}; //u
+double wheel[] = {};
+
+//double rv[] = {60, 10, 80, 0, 40, 10}; //Tren's
+//double blv[] = {50, 0, 50, 0, 200, 150}; //u
+//double gv[] = {60, 10, 50, 0, 60, 10}; //u 
+//double brv[] = {60, 10, 60, 10, 60, 10}; //u  
+//double yev[] = {60, 0, 50, 10, 50, 10}; //u  
+//double orv[] = {41, 31, 49, 39, 28, 18}; //u
+//double emptyv[] = {430, 390, 430, 390, 600, 540}; //u
+
+double wheelv[] = {};
+
+int lightError = 5;
 
 int senseSlot = 0;
 int gate1 = 0;
@@ -116,8 +154,6 @@ void setup() {
   pinMode(green_pin, OUTPUT);
   pinMode(blue_pin, OUTPUT);
 
-  pinMode(A1, INPUT);
-
   //turn off color sensor light
   digitalWrite(red_pin, HIGH);
   digitalWrite(green_pin, HIGH);
@@ -134,22 +170,23 @@ void setup() {
   qtr.setSensorPins((const uint8_t[]){22,24,26,28,30,32,34,36,38,40,42}, SensorCount);
   qtr.setEmitterPin(2);
   
-//  for(int i = 0; i < 6; i+=2) {
-//    rv[i] = r[i/2] + lightError; 
-//    rv[i+1] = r[i/2] - lightError;
-//    blv[i] = bl[i/2] + lightError;
-//    blv[i+1] = bl[i/2] - lightError;
-//    gv[i] = g[i/2] + lightError;
-//    gv[i+1] = g[i/2] - lightError;
-//    brv[i] = br[i/2] + lightError;
-//    brv[i+1] = br[i/2] - lightError;
-//    yev[i] = ye[i/2] + lightError;
-//    yev[i+1] = ye[i/2] - lightError;
-//    orv[i] = ora[i/2] + lightError;
-//    orv[i+1] = ora[i/2] - lightError;
-//    emptyv[i] = empty[i/2] + lightError;
-//    emptyv[i+1] = empty[i/2] - lightError;
-//  }
+  for(int i = 0; i < 6; i+=2) {       //comment for test 
+    rv[i] = r[i/2] + lightError; 
+    rv[i+1] = r[i/2] - lightError;
+    blv[i] = bl[i/2] + lightError;
+    blv[i+1] = bl[i/2] - lightError;
+    gv[i] = g[i/2] + lightError;
+    gv[i+1] = g[i/2] - lightError;
+    brv[i] = br[i/2] + lightError;
+    brv[i+1] = br[i/2] - lightError;
+    yev[i] = ye[i/2] + lightError;
+    yev[i+1] = ye[i/2] - lightError;
+    orv[i] = ora[i/2] + lightError;
+    orv[i+1] = ora[i/2] - lightError;
+    emptyv[i] = empty[i/2] + lightError;
+    emptyv[i+1] = empty[i/2] - lightError;
+    
+  }
   
   for(int i = 0; i < 6; i++) {
     Serial.print("Blue max/mins: "); Serial.println(blv[i]);
@@ -164,7 +201,7 @@ void setup() {
 
 void loop() {
 
-  Serial.print("stopSorting: "); Serial.println(stopSorting);
+  //Serial.print("stopSorting: "); Serial.println(stopSorting);
   
   t_ms = millis();
   t = t_ms / 1000.0;  
@@ -195,6 +232,9 @@ void loop() {
     //Send command to motor
     motorCommand(mp1, mp2, mPWM, input);
 
+    //Send command to hopper motor
+    motorCommand(hop1, hop2, hopPWM, input);
+    
     Pos_old = Pos;
     t_old_enc = t; //save current time and position
 
@@ -202,12 +242,17 @@ void loop() {
     oldLoopTime = t_ms;
     runs++;
 
-
   }
-
+  
+// OLED Timing
+//if (t>t_old_oled+T_oled) {
+//OLED(OLED_Color);
+//t_old_oled=t;
+//  
+//}
   //Comand
   if(stopSorting) {
-    
+    motorCommand(mp1, mp2, mPWM, 0);
   }
 
 
@@ -220,12 +265,14 @@ void loop() {
   //Rotate to next 30 degree slot
   if(t > T_moveOld + T_movement) {
 
+    //These might need to move to somewhere else if they don't open for long enough.
     CloseGate1();
     CloseGate2();
     
     //Decide what color candy is under the sensor and which slot it will need to go to
+    OLED(OLED_Color);
     storeCandy();
-
+    colorSensor();
     //Assign colors to slots
     Serial.print("senseSlot: "); Serial.println(senseSlot);
     Serial.print("gate 1: "); Serial.println(gate1);
@@ -237,9 +284,7 @@ void loop() {
     gate2 = gate1;
     gate1 = senseSlot;
 
-    //These might need to move to somewhere else if they don't open for long enough.
-    CloseGate1();
-    CloseGate2();
+
     
     //Move to next position
     Pos_desired += 30;
