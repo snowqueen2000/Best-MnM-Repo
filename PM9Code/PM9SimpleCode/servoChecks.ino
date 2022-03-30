@@ -8,11 +8,15 @@ void servoChecks() {
   if(gate1 == colorDetect && !oneIsOpen) {
     OpenGate1();
     candySorted++;
+  } else {
+    CloseGate1();
   }
 
   //Gate 2:
   if(gate2 != 0 && gate2 != colorDetect && !twoIsOpen) {
     OpenGate2();
+  } else {
+    CloseGate1();
   }
   
 }

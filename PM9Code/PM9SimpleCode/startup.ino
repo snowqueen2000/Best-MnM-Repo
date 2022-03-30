@@ -60,17 +60,23 @@ void startup() {
 
   digitalWrite(configPins[8], LOW);
 
-  //wait until configuration recieved, or until 5 seconds have passed. NEED TO ADD START BUTTON
-  while(millis() < configStartTime + waitTime && commAddress != deviceAddress) {
+  //wait until a commanded color is seen, or until 5 seconds have passed. NEED TO ADD START BUTTON
+  while(binaryConversion(configPins[4], configPins[3], configPins[2]) == 0 && millis() < configStartTime + waitTime) {
+  
+  }
+  
+  //wait until correct address recieved
+  while(commAddress != deviceAddress) {
 
     commAddress = binaryConversion(configPins[1], configPins[0], 0);
     
   }
 
+  //If a command was seen, update which color to sort, and Queue size.
   if(millis() < configStartTime + waitTime) {
     colorDetect = binaryConversion(configPins[4], configPins[3], configPins[2]);
     maxQsize = binaryConversion(configPins[7], configPins[6], configPins[5]);
-    Serial.println("Coms working");
+    Serial.print("Config recieved! Color: "); Serial.print(colorDetect); Serial.println(". Queue size: ");
   }
 
 
