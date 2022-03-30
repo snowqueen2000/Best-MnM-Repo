@@ -66,7 +66,7 @@ void startup() {
   }
   
   //wait until correct address recieved
-  while(commAddress != deviceAddress) {
+  while(commAddress != deviceAddress && millis() < configStartTime + waitTime) {
 
     commAddress = binaryConversion(configPins[1], configPins[0], 0);
     
