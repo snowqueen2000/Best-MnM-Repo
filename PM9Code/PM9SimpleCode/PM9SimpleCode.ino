@@ -7,7 +7,7 @@
 #include <Adafruit_SSD1306.h>
 
 //CHANGE FOR EACH PERSON
-int deviceAddress = 1;
+int deviceAddress = 3;
 // Color to sort
 int colorDetect = 1; // R=1, G=2. Bl=3, Br=4, Ye=5, Or=6
 
@@ -17,6 +17,9 @@ Adafruit_SSD1306 display(OLED_RESET);
 
 const int OLED_Color = colorDetect;
 
+//start button pins
+int buttonOnPin = 44;
+int startButton = 46;
 
 // color sensor
 int redCount = 0;
@@ -154,6 +157,9 @@ void setup() {
   pinMode(green_pin, OUTPUT);
   pinMode(blue_pin, OUTPUT);
 
+  //Turn on button for measuring
+  digitalWrite(buttonOnPin, HIGH);
+
   //turn off color sensor light
   digitalWrite(red_pin, HIGH);
   digitalWrite(green_pin, HIGH);
@@ -250,6 +256,13 @@ void loop() {
 //t_old_oled=t;
 //  
 //}
+
+  //Check button
+  if(digitalRead(startButton) == 1) {
+    stopSorting = !stopSorting;
+    Serial.println("Button pressed!");
+  }
+
   //Comand
   if(stopSorting) {
     motorCommand(mp1, mp2, mPWM, 0);

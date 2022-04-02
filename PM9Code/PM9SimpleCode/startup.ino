@@ -52,31 +52,31 @@ void startup() {
 
 
 
-    Serial.println("\nWaiting for configuration, or 5 seconds...");
+    Serial.println("\nWaiting for configuration, or until start button is pressed...");
 
-  int waitTime = 5000;
-  int configStartTime = millis();
+//  int waitTime = 5000;
+//  int configStartTime = millis();
   int commAddress;
 
   digitalWrite(configPins[8], LOW);
 
-  //wait until a commanded color is seen, or until 5 seconds have passed. NEED TO ADD START BUTTON
-  while(binaryConversion(configPins[4], configPins[3], configPins[2]) == 0 && millis() < configStartTime + waitTime) {
+  //wait until a commanded color is seen, or until start button is pressed
+  while(binaryConversion(configPins[4], configPins[3], configPins[2]) == 0 && digitalRead(startButton) == 0) {
   
   }
   
-  //wait until correct address recieved
-  while(commAddress != deviceAddress && millis() < configStartTime + waitTime) {
+  //wait until correct address recieved or button is pressed
+  while(commAddress != deviceAddress && digitalRead(startButton) == 0) {
 
     commAddress = binaryConversion(configPins[1], configPins[0], 0);
     
   }
 
   //If a command was seen, update which color to sort, and Queue size.
-  if(millis() < configStartTime + waitTime) {
+  if(digitalRead(startButton) == 0) {
     colorDetect = binaryConversion(configPins[4], configPins[3], configPins[2]);
     maxQsize = binaryConversion(configPins[7], configPins[6], configPins[5]);
-    Serial.print("Config recieved! Color: "); Serial.print(colorDetect); Serial.println(". Queue size: ");
+    Serial.print("Config recieved! Color: "); Serial.print(colorDetect); Serial.print(". Queue size: "); Serial.println(maxQsize);
   }
 
 
