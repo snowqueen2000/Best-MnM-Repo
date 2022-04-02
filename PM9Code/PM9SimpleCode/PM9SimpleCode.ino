@@ -3,20 +3,19 @@
 #include <Servo.h>
 #include <SPI.h>
 #include <Wire.h>
+#include <SharpIR.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 
 //CHANGE FOR EACH PERSON
-int deviceAddress = 1;
+int deviceAddress = 0;
 // Color to sort
 int colorDetect = 1; // R=1, G=2. Bl=3, Br=4, Ye=5, Or=6
 
 // OLED Variables
 #define OLED_RESET 4
 Adafruit_SSD1306 display(OLED_RESET);
-
 const int OLED_Color = colorDetect;
-
 
 // color sensor
 int redCount = 0;
@@ -56,6 +55,12 @@ int Qsize = 0;
 int maxQsize = 5;
 const uint8_t SensorCount = 11;
 uint16_t sensorValues[SensorCount];
+
+// IR Sensor
+#define IRPin A0 // change to A2
+#define model 430 // 430 means 4 to 30 cm it works
+int IRdist;
+SharpIR mySensor = SharpIR(IRPin, model);
 
 // time variables
 unsigned long t_ms = 0;
@@ -109,13 +114,13 @@ int vals[3];                 // array to store three color reading
 //double empty[] = {852, 766, 860}; //u
 //double wheel[] = {};
 
-double rv[] = {999,983,988,985,988,983}; //u BGR
-double blv[] = {993, 984, 995, 989, 998,989}; //u
-double gv[] = {1007, 988,1001,989,991,987}; //u 
-double brv[] = {988,984,999,988,1014,991}; //u  
-double yev[] = {997, 987, 994, 989, 1009, 989}; //u  
-double orv[] = {993, 984, 1005,988,991,988}; //u
-double emptyv[] = {852, 766, 860,0,0,0}; //u
+double rv[] = {676, 481, 736, 665, 410, 300}; //u BGR
+double blv[] = {780, 35, 638, 185, 782, 229} ; //u
+double gv[] = {522, 400, 445, 300, 714, 574}; //u 
+double brv[] = {748, 636, 710, 546, 713, 409}; //u  
+double yev[] = {667, 317, 487, 300, 736, 600}; //u  
+double orv[] = {676, 239, 665, 400, 371, 200}; //u
+double emptyv[] = {873, 397, 722, 479, 876, 486}; //u
 
 double r[] = {31, 31, 23}; //u       //comment for test 
 double bl[] = {21, 25, 35}; //u
@@ -216,6 +221,15 @@ void loop() {
 
   // update OLED
   //OLED(OLED_Color);
+
+  // Run IR Sensor
+  IR();
+  
+  if (IRdist < 21) {
+    motorCommand(mp1, mp2, mPWM, 0); // turn off motor
+    motorCommand(hop1, hop2, hopPWM, 0); // turn off hopper motor
+    
+  }
 
   //Send messages to other modules
   communication();
