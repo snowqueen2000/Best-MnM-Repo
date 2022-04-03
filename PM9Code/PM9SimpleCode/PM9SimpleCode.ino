@@ -18,7 +18,6 @@ Adafruit_SSD1306 display(OLED_RESET);
 const int OLED_Color = colorDetect;
 
 //start button pins
-int buttonOnPin = 44;
 int startButton = 46;
 
 // color sensor
@@ -61,7 +60,7 @@ const uint8_t SensorCount = 11;
 uint16_t sensorValues[SensorCount];
 
 // IR Sensor
-#define IRPin A0 // change to A2
+#define IRPin A3
 #define model 430 // 430 means 4 to 30 cm it works
 int IRdist;
 SharpIR mySensor = SharpIR(IRPin, model);
@@ -152,7 +151,10 @@ int gate1 = 0;
 int gate2 = 0;
 
 //Variable can be changed by ANY OTHER module's estop or previous modulu's queue sensor.
-bool stopSorting = false;
+//bool stopSorting = false;
+bool estopped = false;
+bool commStopped = false;
+bool irStopped = false;
 
 void setup() {
   Serial.begin(9600); 
@@ -162,9 +164,6 @@ void setup() {
   pinMode(red_pin, OUTPUT);
   pinMode(green_pin, OUTPUT);
   pinMode(blue_pin, OUTPUT);
-
-  //Turn on button for measuring
-  digitalWrite(buttonOnPin, HIGH);
 
   //turn off color sensor light
   digitalWrite(red_pin, HIGH);
@@ -231,18 +230,13 @@ void loop() {
 
   // Run IR Sensor
   IR();
-  
-  if (IRdist < 21) {
-    motorCommand(mp1, mp2, mPWM, 0); // turn off motor
-    motorCommand(hop1, hop2, hopPWM, 0); // turn off hopper motor
-    
-  }
+
 
   //Send messages to other modules
   communication();
   
   // Only run every timestep
-  if (t>t_old_enc+T_enc && !stopSorting) {
+  if (t>t_old_enc+T_enc && !irStopped && !commStopped && !estopped) {
 
     //Read encoder counts and calculate position/velocity
     EncoderCalcs();
@@ -254,7 +248,7 @@ void loop() {
     motorCommand(mp1, mp2, mPWM, input);
 
     //Send command to hopper motor
-    motorCommand(hop1, hop2, hopPWM, input);
+    motorCommand(hop1, hop2, hopPWM, 10);
     
     Pos_old = Pos;
     t_old_enc = t; //save current time and position
@@ -273,14 +267,16 @@ void loop() {
 //}
 
   //Check button
-  if(digitalRead(startButton) == 1) {
-    stopSorting = !stopSorting;
-    Serial.println("Button pressed!");
-  }
+
 
   //Comand
-  if(stopSorting) {
+  if(irStopped || commStopped || estopped) {
     motorCommand(mp1, mp2, mPWM, 0);
+
+    if(digitalRead(startButton) == 0) {
+      irStopped = false;
+      Serial.println("Sorting resumed!");
+    }
   }
 
 
@@ -291,11 +287,11 @@ void loop() {
 
 
   //Rotate to next 30 degree slot
-  if(t > T_moveOld + T_movement) {
+  if(t > T_moveOld + T_movement && !irStopped && !commStopped && !estopped ) {
 
-    //These might need to move to somewhere else if they don't open for long enough.
-    CloseGate1();
-    CloseGate2();
+//    //These might need to move to somewhere else if they don't open for long enough.
+//    CloseGate1();
+//    CloseGate2();
     
     //Decide what color candy is under the sensor and which slot it will need to go to
     OLED(OLED_Color);
@@ -305,6 +301,7 @@ void loop() {
     Serial.print("senseSlot: "); Serial.println(senseSlot);
     Serial.print("gate 1: "); Serial.println(gate1);
     Serial.print("gate 2: "); Serial.println(gate2);
+
     //Move servos
     servoChecks();
     

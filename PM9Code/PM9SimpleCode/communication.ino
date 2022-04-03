@@ -27,22 +27,33 @@ void communication() {
   }
 
   //Measure voltage on 5v bus to determine if estop is triggered and tell other modules to stop
-  if(analogRead(estopTriggerPin) < 300) {
+  if(analogRead(estopTriggerPin) < 300 || IRdist < 21) {
     digitalWrite(estopOutPin, HIGH);
   } else {
     digitalWrite(estopOutPin, LOW);
   }
+
   
 
   //Stop sorting operation if next module tells it to.
   int commIn = digitalRead(commInPin);
   int estopIn = digitalRead(estopInPin);
     
-  if(commIn == 1 || estopIn == 1) {
 
-    stopSorting = true;
+  if(commIn == 1) {
+    commStopped = true;
   } else {
-    stopSorting = false;
+    commStopped = false;
+  }
+
+  if(estopIn == 1) {
+    estopped = true;
+  } else {
+    estopped = false;
+  }
+
+  if(IRdist < 21) {
+    irStopped = true;
   }
 
 }

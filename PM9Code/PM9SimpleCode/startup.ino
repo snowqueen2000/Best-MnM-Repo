@@ -57,27 +57,31 @@ void startup() {
 //  int waitTime = 5000;
 //  int configStartTime = millis();
   int commAddress;
+  int buttonState = 1;
 
+  
   digitalWrite(configPins[8], LOW);
 
   //wait until a commanded color is seen, or until start button is pressed
-  while(binaryConversion(configPins[4], configPins[3], configPins[2]) == 0 && digitalRead(startButton) == 0) {
-  
+  while(binaryConversion(configPins[4], configPins[3], configPins[2]) == 0 && buttonState == 1) {
+
+  buttonState = digitalRead(startButton);
   }
   
   //wait until correct address recieved or button is pressed
-  while(commAddress != deviceAddress && digitalRead(startButton) == 0) {
-
+  while(commAddress != deviceAddress && buttonState == 1) {
+//&& digitalRead(startButton) == 0
     commAddress = binaryConversion(configPins[1], configPins[0], 0);
-    
+    buttonState = digitalRead(startButton);
   }
 
   //If a command was seen, update which color to sort, and Queue size.
-  if(digitalRead(startButton) == 0) {
+  if(buttonState == 1) {
+    //digitalRead(startButton) == 0
     colorDetect = binaryConversion(configPins[4], configPins[3], configPins[2]);
     maxQsize = binaryConversion(configPins[7], configPins[6], configPins[5]);
     Serial.print("Config recieved! Color: "); Serial.print(colorDetect); Serial.print(". Queue size: "); Serial.println(maxQsize);
-
+    
   }  
   
 }
