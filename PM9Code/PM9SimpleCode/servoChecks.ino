@@ -4,19 +4,23 @@ bool twoIsOpen = false;
 
 void servoChecks() {
 
-  //Gate 1:
-  if(gate1 == colorDetect && !oneIsOpen) {
+  //Gate 1: Trash
+  if(metalGate1 == 1 && !oneIsOpen) {
     OpenGate1();
-    candySorted++;
   } else {
     CloseGate1();
   }
 
-  //Gate 2:
+  //Gate 2: Unsorted
   if(gate2 != 0 && gate2 != colorDetect && !twoIsOpen) {
     OpenGate2();
   } else {
     CloseGate1();
+  }
+
+  //Increase sort count if needed
+  if(gate1 == colorDetect) {
+    candySorted++;
   }
   
 }

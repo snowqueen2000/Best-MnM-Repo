@@ -146,9 +146,15 @@ double wheelv[] = {};
 
 int lightError = 5;
 
-int senseSlot = 0;
+//color values storage
+//int senseSlot = 0;
 int gate1 = 0;
 int gate2 = 0;
+
+//metal values storage
+int metalSlot = 0;
+int metalGate1 = 0;
+int metalGate2 = 0;
 
 //Variable can be changed by ANY OTHER module's estop or previous modulu's queue sensor.
 //bool stopSorting = false;
@@ -298,7 +304,7 @@ void loop() {
     storeCandy();
     colorSensor();
     //Assign colors to slots
-    Serial.print("senseSlot: "); Serial.println(senseSlot);
+    //Serial.print("senseSlot: "); Serial.println(senseSlot);
     Serial.print("gate 1: "); Serial.println(gate1);
     Serial.print("gate 2: "); Serial.println(gate2);
 
@@ -307,9 +313,10 @@ void loop() {
     
     //update the virtual slots
     gate2 = gate1;
-    gate1 = senseSlot;
+    //gate1 = senseSlot;
 
-
+    metalGate2 = metalGate1;
+    metalGate1 = metalSlot;
     
     //Move to next position
     Pos_desired += 30;
