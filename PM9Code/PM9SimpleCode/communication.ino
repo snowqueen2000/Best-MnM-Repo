@@ -52,7 +52,7 @@ void communication() {
     estopped = false;
   }
 
-  if(IRdist < 21) {
+  if(IRdist < 21 && IRdist != 0) {
     irStopped = true;
   }
 

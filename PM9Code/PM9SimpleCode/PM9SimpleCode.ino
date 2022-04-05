@@ -237,7 +237,6 @@ void loop() {
   // Run IR Sensor
   IR();
 
-
   //Send messages to other modules
   communication();
   
@@ -323,9 +322,6 @@ void loop() {
     //Move to next position
     Pos_desired += 30;
     T_moveOld = t;
-    
-
-
   }
 
 }
