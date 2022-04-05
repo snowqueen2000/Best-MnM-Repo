@@ -1,5 +1,5 @@
 
-int HEpin = 51;
+int HEpin = A8;
 
 /*
  * Runs every 30 degrees
@@ -7,7 +7,7 @@ int HEpin = 51;
  */
 void metalDetect() {
   //Store sensor value in senseSlot
-  metalSlot = digitalRead(HEpin);
-  
+  metalSlot = analogRead(HEpin);
+  Serial.print("Metal sensor: "); Serial.println(metalSlot);
   
 }

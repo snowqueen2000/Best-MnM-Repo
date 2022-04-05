@@ -75,7 +75,7 @@ double Vel = 0;               // current velocity
 double Pos_old = 0;           // previous position
 double T_enc=0.05;            // sample period in seconds
 double T_motor=0.01;          // motor control sample time
-double T_movement = 3;      // Movement Delay in seconds
+double T_movement = 0.9;      // Movement Delay in seconds
 double T_moveOld = 0;
 double T_color = 0.04;
 double t_colorOld = 0;
@@ -302,7 +302,9 @@ void loop() {
     //Decide what color candy is under the sensor and which slot it will need to go to
     OLED(OLED_Color);
     storeCandy();
-    colorSensor();
+    metalDetect();
+    
+    //colorSensor();
     //Assign colors to slots
     //Serial.print("senseSlot: "); Serial.println(senseSlot);
     Serial.print("gate 1: "); Serial.println(gate1);
