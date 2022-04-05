@@ -32,14 +32,13 @@ void communication() {
   } else {
     digitalWrite(estopOutPin, LOW);
   }
-
   
 
   //Stop sorting operation if next module tells it to.
   int commIn = digitalRead(commInPin);
   int estopIn = digitalRead(estopInPin);
-    
 
+    
   if(commIn == 1) {
     commStopped = true;
   } else {
@@ -55,5 +54,4 @@ void communication() {
   if(IRdist < 21 && IRdist != 0) {
     irStopped = true;
   }
-
 }
