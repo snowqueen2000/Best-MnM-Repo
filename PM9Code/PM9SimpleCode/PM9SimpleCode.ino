@@ -8,7 +8,9 @@
 #include <Adafruit_SSD1306.h>
 
 //CHANGE FOR EACH PERSON
-int deviceAddress = 3;
+
+int deviceAddress = 2;
+
 // Color to sort
 int colorDetect = 6; // R=1, G=2. Bl=3, Ye=4, Or=5, Br=6
 
@@ -33,8 +35,8 @@ int candySorted = 0;
 
 // motor driver 
 const int mPWM = 5;
-const int mp1 = 6;
-const int mp2 = 7;
+const int mp1 = 7;
+const int mp2 = 6;
 
 //Hopper motor pins
 const int hopPWM = 3;
@@ -237,7 +239,6 @@ void loop() {
   // Run IR Sensor
   IR();
 
-
   //Send messages to other modules
   communication();
   
@@ -323,6 +324,7 @@ void loop() {
     //Move to next position
     Pos_desired += 30;
     T_moveOld = t;
+
     
 
 
@@ -331,6 +333,7 @@ void loop() {
     CloseGate1();
     CloseGate2();
     
+
   }
 
 }
