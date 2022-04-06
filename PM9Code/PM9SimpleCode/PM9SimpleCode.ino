@@ -3,20 +3,24 @@
 #include <Servo.h>
 #include <SPI.h>
 #include <Wire.h>
+#include <SharpIR.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 
 //CHANGE FOR EACH PERSON
+
 int deviceAddress = 2;
+
 // Color to sort
 int colorDetect = 1; // R=1, G=2. Bl=3, Br=4, Ye=5, Or=6
 
 // OLED Variables
 #define OLED_RESET 4
 Adafruit_SSD1306 display(OLED_RESET);
-
 const int OLED_Color = colorDetect;
 
+//start button pins
+int startButton = 46;
 
 // color sensor
 int redCount = 0;
@@ -57,6 +61,12 @@ int maxQsize = 5;
 const uint8_t SensorCount = 11;
 uint16_t sensorValues[SensorCount];
 
+// IR Sensor
+#define IRPin A3
+#define model 430 // 430 means 4 to 30 cm it works
+int IRdist;
+SharpIR mySensor = SharpIR(IRPin, model);
+
 // time variables
 unsigned long t_ms = 0;
 double t = 0;                 // current time
@@ -67,7 +77,7 @@ double Vel = 0;               // current velocity
 double Pos_old = 0;           // previous position
 double T_enc=0.05;            // sample period in seconds
 double T_motor=0.01;          // motor control sample time
-double T_movement = 3;      // Movement Delay in seconds
+double T_movement = 0.9;      // Movement Delay in seconds
 double T_moveOld = 0;
 double T_color = 0.04;
 double t_colorOld = 0;
@@ -109,13 +119,13 @@ int vals[3];                 // array to store three color reading
 //double empty[] = {852, 766, 860}; //u
 //double wheel[] = {};
 
-double rv[] = {999,983,988,985,988,983}; //u BGR
-double blv[] = {993, 984, 995, 989, 998,989}; //u
-double gv[] = {1007, 988,1001,989,991,987}; //u 
-double brv[] = {988,984,999,988,1014,991}; //u  
-double yev[] = {997, 987, 994, 989, 1009, 989}; //u  
-double orv[] = {993, 984, 1005,988,991,988}; //u
-double emptyv[] = {852, 766, 860,0,0,0}; //u
+double rv[] = {676, 481, 736, 665, 410, 300}; //u BGR
+double blv[] = {780, 35, 638, 185, 782, 229} ; //u
+double gv[] = {522, 400, 445, 300, 714, 574}; //u 
+double brv[] = {748, 636, 710, 546, 713, 409}; //u  
+double yev[] = {667, 317, 487, 300, 736, 600}; //u  
+double orv[] = {676, 239, 665, 400, 371, 200}; //u
+double emptyv[] = {873, 397, 722, 479, 876, 486}; //u
 
 double r[] = {31, 31, 23}; //u       //comment for test 
 double bl[] = {21, 25, 35}; //u
@@ -138,12 +148,21 @@ double wheelv[] = {};
 
 int lightError = 5;
 
-int senseSlot = 0;
+//color values storage
+//int senseSlot = 0;
 int gate1 = 0;
 int gate2 = 0;
 
+//metal values storage
+int metalSlot = 0;
+int metalGate1 = 0;
+int metalGate2 = 0;
+
 //Variable can be changed by ANY OTHER module's estop or previous modulu's queue sensor.
-bool stopSorting = false;
+//bool stopSorting = false;
+bool estopped = false;
+bool commStopped = false;
+bool irStopped = false;
 
 void setup() {
   Serial.begin(9600); 
@@ -217,11 +236,14 @@ void loop() {
   // update OLED
   //OLED(OLED_Color);
 
+  // Run IR Sensor
+  IR();
+
   //Send messages to other modules
   communication();
   
   // Only run every timestep
-  if (t>t_old_enc+T_enc && !stopSorting) {
+  if (t>t_old_enc+T_enc && !irStopped && !commStopped && !estopped) {
 
     //Read encoder counts and calculate position/velocity
     EncoderCalcs();
@@ -233,7 +255,7 @@ void loop() {
     motorCommand(mp1, mp2, mPWM, input);
 
     //Send command to hopper motor
-    motorCommand(hop1, hop2, hopPWM, input);
+    motorCommand(hop1, hop2, hopPWM, 10);
     
     Pos_old = Pos;
     t_old_enc = t; //save current time and position
@@ -250,9 +272,18 @@ void loop() {
 //t_old_oled=t;
 //  
 //}
+
+  //Check button
+
+
   //Comand
-  if(stopSorting) {
+  if(irStopped || commStopped || estopped) {
     motorCommand(mp1, mp2, mPWM, 0);
+
+    if(digitalRead(startButton) == 0) {
+      irStopped = false;
+      Serial.println("Sorting resumed!");
+    }
   }
 
 
@@ -263,35 +294,36 @@ void loop() {
 
 
   //Rotate to next 30 degree slot
-  if(t > T_moveOld + T_movement) {
+  if(t > T_moveOld + T_movement && !irStopped && !commStopped && !estopped ) {
 
-    //These might need to move to somewhere else if they don't open for long enough.
-    CloseGate1();
-    CloseGate2();
+//    //These might need to move to somewhere else if they don't open for long enough.
+//    CloseGate1();
+//    CloseGate2();
     
     //Decide what color candy is under the sensor and which slot it will need to go to
     OLED(OLED_Color);
     storeCandy();
-    colorSensor();
+    metalDetect();
+    
+    //colorSensor();
     //Assign colors to slots
-    Serial.print("senseSlot: "); Serial.println(senseSlot);
+    //Serial.print("senseSlot: "); Serial.println(senseSlot);
     Serial.print("gate 1: "); Serial.println(gate1);
     Serial.print("gate 2: "); Serial.println(gate2);
+
     //Move servos
     servoChecks();
     
     //update the virtual slots
     gate2 = gate1;
-    gate1 = senseSlot;
+    //gate1 = senseSlot;
 
-
+    metalGate2 = metalGate1;
+    metalGate1 = metalSlot;
     
     //Move to next position
     Pos_desired += 30;
     T_moveOld = t;
-    
-
-
   }
 
 }
