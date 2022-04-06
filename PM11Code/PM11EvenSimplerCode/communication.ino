@@ -48,10 +48,7 @@ void communication() {
 
   if(estopIn == 1) {
     estopped = true;
-  } else {
-    estopped = false;
   }
-
   if(IRdist < 21 && IRdist != 0) {
     irStopped = true;
   }
