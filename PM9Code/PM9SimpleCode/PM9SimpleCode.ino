@@ -7,7 +7,7 @@
 #include <Adafruit_SSD1306.h>
 
 //CHANGE FOR EACH PERSON
-int deviceAddress = 1;
+int deviceAddress = 2;
 // Color to sort
 int colorDetect = 1; // R=1, G=2. Bl=3, Br=4, Ye=5, Or=6
 
@@ -31,8 +31,8 @@ int candySorted = 0;
 
 // motor driver 
 const int mPWM = 5;
-const int mp1 = 6;
-const int mp2 = 7;
+const int mp1 = 7;
+const int mp2 = 6;
 
 //Hopper motor pins
 const int hopPWM = 3;
