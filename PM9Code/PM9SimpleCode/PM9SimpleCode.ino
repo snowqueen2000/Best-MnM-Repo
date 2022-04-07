@@ -8,9 +8,11 @@
 #include <Adafruit_SSD1306.h>
 
 //CHANGE FOR EACH PERSON
-int deviceAddress = 3;
+
+int deviceAddress = 2;
+
 // Color to sort
-int colorDetect = 1; // R=1, G=2. Bl=3, Br=4, Ye=5, Or=6
+int colorDetect = 6; // R=1, G=2. Bl=3, Ye=4, Or=5, Br=6
 
 // OLED Variables
 #define OLED_RESET 4
@@ -33,8 +35,8 @@ int candySorted = 0;
 
 // motor driver 
 const int mPWM = 5;
-const int mp1 = 6;
-const int mp2 = 7;
+const int mp1 = 7;
+const int mp2 = 6;
 
 //Hopper motor pins
 const int hopPWM = 3;
@@ -75,7 +77,7 @@ double Vel = 0;               // current velocity
 double Pos_old = 0;           // previous position
 double T_enc=0.05;            // sample period in seconds
 double T_motor=0.01;          // motor control sample time
-double T_movement = 0.9;      // Movement Delay in seconds
+double T_movement = 3;      // Movement Delay in seconds
 double T_moveOld = 0;
 double T_color = 0.04;
 double t_colorOld = 0;
@@ -322,6 +324,16 @@ void loop() {
     //Move to next position
     Pos_desired += 30;
     T_moveOld = t;
+
+    
+
+
+  } else if(t > T_moveOld + (T_movement/2) && !irStopped && !commStopped && !estopped ) {
+    
+    CloseGate1();
+    CloseGate2();
+    
+
   }
 
 }

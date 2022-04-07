@@ -81,8 +81,7 @@ void startup() {
     colorDetect = binaryConversion(configPins[4], configPins[3], configPins[2]);
     maxQsize = binaryConversion(configPins[7], configPins[6], configPins[5]);
     Serial.print("Config recieved! Color: "); Serial.print(colorDetect); Serial.print(". Queue size: "); Serial.println(maxQsize);
-
-  }
-
+    
+  }  
   
 }
