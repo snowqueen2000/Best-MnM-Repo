@@ -1,4 +1,4 @@
 void IR() {
   IRdist = mySensor.distance();
-  Serial.println(IRdist);
+  //Serial.println(IRdist);
 }

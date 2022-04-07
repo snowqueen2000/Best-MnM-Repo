@@ -13,5 +13,4 @@ void metalDetect() {
 
   Serial.print("Metal sensor: "); Serial.println(metalSlot);
 
-
 }

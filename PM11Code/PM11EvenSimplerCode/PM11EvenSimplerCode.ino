@@ -10,7 +10,7 @@
 //CHANGE FOR EACH PERSON
 int deviceAddress = 3;
 // Color to sort
-int colorDetect = 6; // R=1, G=2. Bl=3, Ye=4, Or=5, Br=6, empty=0
+int colorDetect = 2; // R=1, G=2. Bl=3, Ye=4, Or=5, Br=6, empty=0
 
 // OLED Variables
 #define OLED_RESET 4
@@ -75,7 +75,7 @@ double Vel = 0;               // current velocity
 double Pos_old = 0;           // previous position
 double T_enc = 0.05;          // sample period in seconds
 double T_motor = 0.01;        // motor control sample time
-double T_movement = 3;      // Movement Delay in seconds
+double T_movement = 0.9;      // Movement Delay in seconds
 double T_moveOld = 0;
 double T_color = 0.04;
 double t_colorOld = 0;
@@ -84,7 +84,6 @@ double T_checks = 0.1; //How often (in seconds) to check the stops and communica
 double t_move_old = 0;
 double t_OLED_old = 0;
 double T_OLED = 0.5;
-
 
 int movementProgress = 0;
 
@@ -163,7 +162,7 @@ int metalSlot = 0;
 int metalGate1 = 0;
 int metalGate2 = 0;
 
-//Variable can be changed by ANY OTHER module's estop or previous modulu's queue sensor.
+//Variable can be changed by ANY OTHER module's estop or previous module's queue sensor.
 //bool stopSorting = false;
 bool estopped = false;
 bool commStopped = false;
@@ -268,7 +267,6 @@ void loop() {
     t_OLED_old = t;
   }
 
-
   //Enocder stuff
   if (t > t_old_enc + T_enc && !irStopped && !commStopped && !estopped) {
 
@@ -288,7 +286,6 @@ void loop() {
     t_old_enc = t; //save current time and position
 
   }
-
 
   //Movement loop
   if (!irStopped && !commStopped && !estopped) {

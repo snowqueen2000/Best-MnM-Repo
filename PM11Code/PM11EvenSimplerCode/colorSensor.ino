@@ -1,7 +1,5 @@
-
-
+// Color Sensing Function
 int analogPin = A0;
-
 
 char lightColor = 'b';
 
@@ -12,20 +10,19 @@ char lightColor = 'b';
  
 void colorSensor() {
 
-//  Serial.print("B: "); Serial.print(vals[0]);
-//  Serial.print(" G: "); Serial.print(vals[1]);
-//  Serial.print(" R: "); Serial.println(vals[2]);
+  Serial.print("B: "); Serial.print(vals[0]);
+  Serial.print(" G: "); Serial.print(vals[1]);
+  Serial.print(" R: "); Serial.println(vals[2]);
     
     if(lightColor == 'b') {
 
       instVals[2] = analogRead(analogPin); // read phototransistor and store value
-        //Serial.println(vals[2]); // print stored value.
+      //Serial.println(vals[2]); // print stored value.
 
       // set LED color to blue
       digitalWrite(blue_pin, LOW);   
       digitalWrite(green_pin,HIGH);
       digitalWrite(red_pin,HIGH);
-
 
       vals[2] = vals[2] + instVals[2];
       lightColor = 'g';
@@ -56,5 +53,4 @@ void colorSensor() {
       colorReadings++;
     }
   
-
   }
