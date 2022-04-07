@@ -102,6 +102,7 @@ double runs = 0;
 double vals[] = {0, 0, 0};               // array to store three color reading
 int instVals[3];
 int colorReadings = 0;
+int maxColorReadings = 5;
 
 //Color sensor calibartion values
 //bgr:  max, min, max, min, max, min
@@ -333,7 +334,13 @@ void loop() {
           }
 
           //Once all readings are taken, Store what color that candy is and move on to next step.
-          if (colorReadings >= 5) {
+          if (colorReadings >= maxColorReadings) {
+            vals[0] = vals[0] / maxColorReadings;
+            vals[1] = vals[1] / maxColorReadings;
+            vals[2] = vals[2] / maxColorReadings;
+
+            
+            
             storeCandy();
             movementProgress = 4;
             Serial.print("gate 1: "); Serial.println(gate1);
