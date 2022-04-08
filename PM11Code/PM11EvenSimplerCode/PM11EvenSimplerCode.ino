@@ -10,7 +10,7 @@
 //CHANGE FOR EACH PERSON
 int deviceAddress = 3;
 // Color to sort
-int colorDetect = 6; // R=1, G=2. Bl=3, Ye=4, Or=5, Br=6, empty=0
+int colorDetect = 2; // R=1, G=2. Bl=3, Ye=4, Or=5, Br=6, empty=0
 
 // OLED Variables
 #define OLED_RESET 4
@@ -19,12 +19,6 @@ const int OLED_Color = colorDetect;
 
 //start button pins
 int startButton = 46;
-
-// color sensor
-int redCount = 0;
-int greenCount = 0;
-int blueCount = 0;
-int candySorted = 0;
 
 //LED variables
 #define blue_pin 13
@@ -75,7 +69,7 @@ double Vel = 0;               // current velocity
 double Pos_old = 0;           // previous position
 double T_enc = 0.05;          // sample period in seconds
 double T_motor = 0.01;        // motor control sample time
-double T_movement = 3;      // Movement Delay in seconds
+double T_movement = 0.9;      // Movement Delay in seconds
 double T_moveOld = 0;
 double T_color = 0.1;
 double t_color_old = 0;
@@ -84,9 +78,7 @@ double T_checks = 0.1; //How often (in seconds) to check the stops and communica
 double t_move_old = 0;
 double t_OLED_old = 0;
 double T_OLED = 0.5;
-double LED_old = 0;
-double t_servo_old = 0;
-double T_servo = 0.4;
+
 
 int movementProgress = 0;
 
@@ -105,11 +97,11 @@ double vals[] = {0, 0, 0};               // array to store three color reading
 int instVals[3];
 int colorReadings = 0;
 int maxColorReadings = 5;
-char colorToSense = 'B';
-int Breadings = 0;
-int Greadings = 0;
-int Rreadings = 0;
-bool firstCheck = true;
+
+int redCount = 0;
+int greenCount = 0;
+int blueCount = 0;
+int candySorted = 0;
 
 //Color sensor calibartion values
 //bgr:  max, min, max, min, max, min
@@ -132,13 +124,13 @@ bool firstCheck = true;
 //double empty[] = {852, 766, 860}; //u
 //double wheel[] = {};
 
-double rv[] = {676, 481, 736, 665, 410, 300}; //u BGR
-double blv[] = {780, 35, 638, 185, 782, 229} ; //u
-double gv[] = {522, 400, 445, 300, 714, 574}; //u
-double brv[] = {748, 636, 710, 546, 713, 409}; //u
-double yev[] = {667, 317, 487, 300, 736, 600}; //u
-double orv[] = {676, 239, 665, 400, 371, 200}; //u
-double emptyv[] = {873, 397, 722, 479, 876, 486}; //u
+double rv[] = {650, 645, 679, 676, 44, 43}; //u BGR
+double blv[] = {43, 40, 246, 229, 676, 672} ; //u
+double gv[] = {426, 416, 37,  37,  493, 489}; //u
+double brv[] = {706, 688, 721, 702, 660, 641}; //u
+double yev[] = {649, 598, 37, 36, 33, 32}; //u
+double orv[] = {640, 632, 666, 665, 34, 33}; //u
+double emptyv[] = {758, 751, 684, 680, 759, 751}; //u
 
 double r[] = {31, 31, 23}; //u       //comment for test
 double bl[] = {21, 25, 35}; //u
@@ -172,7 +164,7 @@ int metalSlot = 0;
 int metalGate1 = 0;
 int metalGate2 = 0;
 
-//Variable can be changed by ANY OTHER module's estop or previous modulu's queue sensor.
+//Variable can be changed by ANY OTHER module's estop or previous module's queue sensor.
 //bool stopSorting = false;
 bool estopped = false;
 bool commStopped = false;
@@ -280,7 +272,6 @@ void loop() {
     t_OLED_old = t;
   }
 
-
   //Enocder stuff
   if (t > t_old_enc + T_enc && !irStopped && !commStopped && !estopped) {
 
@@ -300,7 +291,6 @@ void loop() {
     t_old_enc = t; //save current time and position
 
   }
-
 
   //Movement loop
   if (!irStopped && !commStopped && !estopped) {
@@ -341,6 +331,30 @@ void loop() {
 
       case 3:
 
+          //Runs color sensor
+          if (t > t_colorOld + T_color) { //color timing check
+            colorSensor();
+
+            t_colorOld = t;
+          }
+
+          //Once all readings are taken, Store what color that candy is and move on to next step.
+          if (colorReadings >= maxColorReadings) {
+            vals[0] = vals[0] / maxColorReadings;
+            vals[1] = vals[1] / maxColorReadings;
+            vals[2] = vals[2] / maxColorReadings;
+
+            Serial.println(vals[0]);
+            Serial.println(vals[1]);
+            Serial.println(vals[2]);
+            
+            storeCandy();
+            movementProgress = 4;
+//            Serial.print("gate 1: "); Serial.println(gate1);
+//            Serial.print("gate 2: "); Serial.println(gate2);
+          }
+
+        }
         metalDetect();
         //Color/metal sense until enough data points are taken, then move on
         if (metalGate1 == 0 || true) { //TEMPORARY UNTIL WE GET HALL SENSORS SET UP
@@ -444,8 +458,6 @@ void loop() {
 
         movementProgress = 0;
         break;
-
-
     }
 
     T_moveOld = t;

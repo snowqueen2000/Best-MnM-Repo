@@ -79,7 +79,8 @@ void OLED(int type) {
     display.print("/");
     display.println(maxQsize);
     display.display();
-  } else {
+  }
+    else {
     display.clearDisplay();
     display.setTextSize(1);
     display.setTextColor(WHITE);
@@ -95,13 +96,9 @@ void OLED(int type) {
 }
 
 void oledColor(String c) {
-
   //display.setTextSize(1);
   //display.setTextColor(WHITE);
   //display.setCursor(0,15);
   display.print("Sensing: "); display.println(c);
   display.display();
-
-
-
 }
