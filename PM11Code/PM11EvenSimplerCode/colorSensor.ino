@@ -9,10 +9,6 @@ char lightColor = 'b';
  */
  
 void colorSensor() {
-
-  Serial.print("B: "); Serial.print(vals[0]);
-  Serial.print(" G: "); Serial.print(vals[1]);
-  Serial.print(" R: "); Serial.println(vals[2]);
     
     if(lightColor == 'b') {
 
@@ -26,7 +22,9 @@ void colorSensor() {
 
       vals[2] = vals[2] + instVals[2];
       lightColor = 'g';
-    } else if(lightColor == 'g') {
+    }
+    
+      else if(lightColor == 'g') {
 
       instVals[0] = analogRead(analogPin); // read phototransistor and store value
         //Serial.print(vals[0]);Serial.print(", "); // print stored value.
@@ -38,7 +36,9 @@ void colorSensor() {
 
       vals[0] = vals[0] + instVals[0];
       lightColor = 'r';
-    } else if(lightColor == 'r') {
+      }
+      
+      else if(lightColor == 'r') {
 
       instVals[1] = analogRead(analogPin); // read phototransistor and store value
         //Serial.print(vals[1]);Serial.print(", ");  // print stored value.

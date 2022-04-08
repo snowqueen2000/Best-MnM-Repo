@@ -15,7 +15,6 @@ int estopTriggerPin = A1; //MAY NEED TO CHANGE THIS PIN
  
 void communication() {
 
-  
 //Serial.println(analogRead(estopTriggerPin));
 
 
@@ -33,13 +32,12 @@ void communication() {
     digitalWrite(estopOutPin, LOW);
   }
 
-  
 
   //Stop sorting operation if next module tells it to.
   int commIn = digitalRead(commInPin);
   int estopIn = digitalRead(estopInPin);
-    
 
+    
   if(commIn == 1) {
     commStopped = true;
   } else {
