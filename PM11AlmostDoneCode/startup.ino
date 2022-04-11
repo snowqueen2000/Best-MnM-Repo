@@ -49,9 +49,29 @@ void startup() {
   Serial.println("Sensor calibration complete.");
   Serial.print("difference: "); Serial.println(calDiff);
 
+  Serial.println("Zeroing...");
 
+// Test
+  int zeropos = digitalRead(clicking);
+  //Serial.println(zeropos);
+  while (zeropos == 1) {
+    motorCommand(mp1, mp2, mPWM, -2);
+    zeropos = digitalRead(clicking); 
+    Serial.println(zeropos);
+  }
+  
 
+  
+   while(zeropos==0){
+      motorCommand(mp1, mp2, mPWM, -2);
+      zeropos=digitalRead(clicking);
+     Serial.println(zeropos);
+    }
+    
+   motorCommand(mp1, mp2, mPWM, 0);
+  myEnc.write(200);
 
+    Serial.println("Zeroing complete!");
     Serial.println("\nWaiting for configuration, or until start button is pressed...");
 
 //  int waitTime = 5000;
