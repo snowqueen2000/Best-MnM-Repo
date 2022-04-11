@@ -7,11 +7,11 @@ int HEpin = A8;
 */
 void metalDetect() {
   //Store sensor value in senseSlot
-  if (analogRead(HEpin) >= 400) {
+  if (analogRead(HEpin) >= 300) {
     metalSlot = 1;
   }
 
-  Serial.print("Metal sensor: "); Serial.println(metalSlot);
+  Serial.print("Metal sensor: "); Serial.println(metalGate1);
 
 
 }

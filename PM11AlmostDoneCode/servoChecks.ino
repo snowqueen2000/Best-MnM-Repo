@@ -5,7 +5,7 @@ bool twoIsOpen = false;
 void servoChecks() {
 
   //Gate 1: Trash
-  if(metalGate1 > 300) {
+  if(metalGate1 == 1) {
     OpenGate1();
     Serial.println("Trash found!");
   } else {
@@ -27,7 +27,7 @@ void servoChecks() {
 }
 
 // Functions
-void OpenGate1(){
+void CloseGate1(){
   if(!oneIsOpen) {
     for (int pos = 0; pos <= 90; pos += 1) { 
         servo1.write(pos); 
@@ -45,7 +45,7 @@ void OpenGate2(){
   }
 }
 
-void CloseGate1(){
+void OpenGate1(){
  if(oneIsOpen) {
  for (int pos = 90; pos >= 0; pos -= 1) { 
     servo1.write(pos);                       
