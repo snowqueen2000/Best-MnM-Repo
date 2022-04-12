@@ -7,7 +7,8 @@ double calDiff;
  * Assumes that the module starts over an empty hole
  */
 
-int configPins[] = {31,33,35,37,39,41,43,45,47};
+int configPins[] = {23,25,27,29,31,33,35,37,39};
+                   
  
 void startup() {
 
@@ -55,7 +56,7 @@ void startup() {
   int zeropos = digitalRead(clicking);
   //Serial.println(zeropos);
   while (zeropos == 1) {
-    motorCommand(mp1, mp2, mPWM, -2);
+    motorCommand(mp1, mp2, mPWM, -4);
     zeropos = digitalRead(clicking); 
     Serial.println(zeropos);
   }
@@ -63,7 +64,7 @@ void startup() {
 
   
    while(zeropos==0){
-      motorCommand(mp1, mp2, mPWM, -2);
+      motorCommand(mp1, mp2, mPWM, -4);
       zeropos=digitalRead(clicking);
      Serial.println(zeropos);
     }

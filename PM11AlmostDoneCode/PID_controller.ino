@@ -1,8 +1,8 @@
 //PID gains
 
-double Kp  = 0.19; //0.6 goes unstable
-double Kd = 0.002;
-double Ki = 0.01;
+double Kp  = 0.22; //0.6 goes unstable
+double Kd = 0.00;
+double Ki = 0;
 
 double integralError = 0;
 

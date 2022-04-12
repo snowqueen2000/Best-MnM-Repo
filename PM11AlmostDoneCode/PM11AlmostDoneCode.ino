@@ -20,6 +20,9 @@ const int OLED_Color = colorDetect;
 //start button pins
 int startButton = 46;
 
+//click sensor
+int clicking = 8;
+
 // color sensor
 int redCount = 0;
 int greenCount = 0;
