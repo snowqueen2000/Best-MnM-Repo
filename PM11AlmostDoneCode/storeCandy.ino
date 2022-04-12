@@ -44,6 +44,7 @@ void storeCandy() {
     oledColor("Orange");
   } else {
     //if empty
+    Serial.println("Empty");
     gate1 = 0;
     oledColor("No color");
     

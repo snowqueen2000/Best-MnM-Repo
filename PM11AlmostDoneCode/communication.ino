@@ -5,7 +5,7 @@ int commInPin = 52;
 
 //these pins are connected to each other and the estop pins on every other module. Copper tape?
 int estopOutPin = 53;
-int estopInPin = 48;
+int estopInPin = 51;
 
 int estopTriggerPin = A1; //MAY NEED TO CHANGE THIS PIN
 

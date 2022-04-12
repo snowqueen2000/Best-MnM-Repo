@@ -144,12 +144,12 @@ double orv[] = {676, 239, 665, 400, 371, 200}; //u
 double emptyv[] = {873, 397, 722, 479, 876, 486}; //u
 
 double r[] = {31, 31, 23}; //u       //comment for test
-double bl[] = {21, 25, 35}; //u
+double bl[] = {20, 25, 30}; //u
 double g[] = {28, 22, 30}; //u
-double br[] = {30, 33, 31}; //u
+double br[] = {27, 31, 31}; //u
 double ye[] = {28, 21, 20}; //u
-double ora[] = {30, 34, 20}; //u
-double empty[] = {48, 49, 45}; //u
+double ora[] = {28, 30, 21}; //u
+double empty[] = {30, 30, 30}; //u
 double wheel[] = {};
 
 //double rv[] = {60, 10, 80, 0, 40, 10}; //Tren's
@@ -403,6 +403,7 @@ void loop() {
 
         } else { //If there's a nut under the color sensor, move to the next step
           movementProgress = 4;
+          Serial.println("Color sensing skipped: nut in slot");
         }
 
 
@@ -439,7 +440,7 @@ void loop() {
         //Update virtual conveyer and reset to progress to 0.
 
         gate2 = gate1;
-        //gate1 = senseSlot;
+        gate1 = 0;
 
         metalGate2 = metalGate1;
         metalGate1 = metalSlot;

@@ -56,7 +56,7 @@ void startup() {
   int zeropos = digitalRead(clicking);
   //Serial.println(zeropos);
   while (zeropos == 1) {
-    motorCommand(mp1, mp2, mPWM, -4);
+    motorCommand(mp1, mp2, mPWM, -2);
     zeropos = digitalRead(clicking); 
     Serial.println(zeropos);
   }
@@ -64,7 +64,7 @@ void startup() {
 
   
    while(zeropos==0){
-      motorCommand(mp1, mp2, mPWM, -4);
+      motorCommand(mp1, mp2, mPWM, -2);
       zeropos=digitalRead(clicking);
      Serial.println(zeropos);
     }
