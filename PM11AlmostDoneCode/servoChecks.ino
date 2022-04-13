@@ -8,6 +8,7 @@ void servoChecks() {
   if(metalGate1 == 1) {
     OpenGate1();
     Serial.println("Trash found!");
+    trashCount++;
   } else {
     //CloseGate1();
   }
@@ -15,13 +16,15 @@ void servoChecks() {
   //Gate 2: Unsorted
   if(gate2 != 0 && gate2 != colorDetect) { //gate2 != 0 &&
     OpenGate2();
+    unsortedCount++;
   } else {
    //CloseGate1();
   }
 
   //Increase sort count if needed
-  if(gate1 == colorDetect) {
-    candySorted++;
+  if(gate2 == colorDetect) {
+    candySorted++;q
+    Serial.println("Sorted a candy! Yay!");
   }
   
 }

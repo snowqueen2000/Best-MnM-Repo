@@ -10,7 +10,7 @@
 //CHANGE FOR EACH PERSON
 int deviceAddress = 3;
 // Color to sort
-int colorDetect = 3; // R=1, G=2. Bl=3, Ye=4, Or=5, Br=6, empty=0
+int colorDetect = 2; // R=1, G=2. Bl=3, Ye=4, Or=5, Br=6, empty=0
 
 // OLED Variables
 #define OLED_RESET 4
@@ -28,6 +28,9 @@ int redCount = 0;
 int greenCount = 0;
 int blueCount = 0;
 int candySorted = 0;
+
+int trashCount = 0;
+int unsortedCount = 0;
 
 //LED variables
 #define blue_pin 13
@@ -58,7 +61,7 @@ const int servo2Pin = 10;
 // Q sensor
 QTRSensors qtr;
 int Qsize = 0;
-int maxQsize = 5;
+int maxQsize = 3;
 const uint8_t SensorCount = 11;
 uint16_t sensorValues[SensorCount];
 
@@ -135,20 +138,20 @@ bool firstCheck = true;
 //double empty[] = {852, 766, 860}; //u
 //double wheel[] = {};
 
-double rv[] = {676, 481, 736, 665, 410, 300}; //u BGR
-double blv[] = {780, 35, 638, 185, 782, 229} ; //u
-double gv[] = {522, 400, 445, 300, 714, 574}; //u
-double brv[] = {748, 636, 710, 546, 713, 409}; //u
+double rv[] = {25, 35, 30, 34, 21, 25}; //u BGR
+double blv[] = {19, 22, 24, 28, 33, 37} ; //u
+double gv[] = {27, 31, 21, 25, 31, 37}; //u
+double brv[] = {29, 33, 31, 35, 33, 36}; //u
 double yev[] = {667, 317, 487, 300, 736, 600}; //u
 double orv[] = {676, 239, 665, 400, 371, 200}; //u
 double emptyv[] = {873, 397, 722, 479, 876, 486}; //u
 
 double r[] = {31, 31, 23}; //u       //comment for test
-double bl[] = {20, 25, 30}; //u
-double g[] = {28, 22, 30}; //u
-double br[] = {27, 31, 31}; //u
+double bl[] = {20, 25, 35}; //u
+double g[] = {28, 22, 31}; //u
+double br[] = {28, 31, 31}; //u
 double ye[] = {28, 21, 20}; //u
-double ora[] = {28, 30, 21}; //u
+double ora[] = {31, 30, 21}; //u
 double empty[] = {30, 30, 30}; //u
 double wheel[] = {};
 
@@ -162,7 +165,7 @@ double wheel[] = {};
 
 double wheelv[] = {};
 
-int lightError = 5;
+int lightError = 3;
 
 //color values storage
 //int senseSlot = 0;
