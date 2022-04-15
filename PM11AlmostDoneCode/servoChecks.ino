@@ -23,7 +23,7 @@ void servoChecks() {
 
   //Increase sort count if needed
   if(gate2 == colorDetect) {
-    candySorted++;q
+    candySorted++;
     Serial.println("Sorted a candy! Yay!");
   }
   

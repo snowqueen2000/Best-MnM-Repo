@@ -165,7 +165,7 @@ double wheel[] = {};
 
 double wheelv[] = {};
 
-int lightError = 3;
+int lightError = 5;
 
 //color values storage
 //int senseSlot = 0;
@@ -185,6 +185,7 @@ bool commStopped = false;
 bool irStopped = false;
 
 void setup() {
+  statusLED("blue");
   Serial.begin(9600);
   pinMode(mp1, OUTPUT);
   pinMode(mp2, OUTPUT);
@@ -234,7 +235,7 @@ void setup() {
   }
 
   startup();
-
+  statusLED("green");
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
   display.clearDisplay();
 
@@ -256,6 +257,12 @@ void loop() {
 
     t_checks_old = t;
 
+    if (commStopped) {
+      statusLED("blue");
+    }
+    if (irStopped || estopped) {
+      statusLED("red");
+    }
 
     //Stop motor if needed
     if (irStopped || commStopped || estopped) {
@@ -268,8 +275,10 @@ void loop() {
         irStopped = false;
         estopped = false;
         Serial.println("Sorting resumed!");
+        statusLED("green");
       }
     }
+
 
 
 
