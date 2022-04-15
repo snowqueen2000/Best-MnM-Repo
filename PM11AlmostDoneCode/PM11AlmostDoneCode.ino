@@ -146,7 +146,7 @@ double yev[] = {667, 317, 487, 300, 736, 600}; //u
 double orv[] = {676, 239, 665, 400, 371, 200}; //u
 double emptyv[] = {873, 397, 722, 479, 876, 486}; //u
 
-double r[] = {0, 0, 0}; //u       //comment for test
+double r[] = {31, 31, 25}; //u       //comment for test
 double bl[] = {20, 25, 35}; //u
 double g[] = {28, 22, 31}; //u
 double br[] = {28, 31, 31}; //u
