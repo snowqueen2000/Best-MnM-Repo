@@ -10,7 +10,7 @@
 //CHANGE FOR EACH PERSON
 int deviceAddress = 3;
 // Color to sort
-int colorDetect = 2; // R=1, G=2. Bl=3, Ye=4, Or=5, Br=6, empty=0
+int colorDetect = 3; // R=1, G=2. Bl=3, Ye=4, Or=5, Br=6, empty=0
 
 // OLED Variables
 #define OLED_RESET 4
