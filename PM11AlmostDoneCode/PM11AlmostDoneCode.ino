@@ -379,9 +379,12 @@ void loop() {
     //Send command to motor
     motorCommand(mp1, mp2, mPWM, input);
 
-    //Send command to hopper motor
-    motorCommand(hop1, hop2, hopPWM, 6);
-
+    if (Qsize >= maxQsize) {
+      //Send command to hopper motor
+      motorCommand(hop1, hop2, hopPWM, 0);
+    } else {
+      motorCommand(hop1, hop2, hopPWM, 6);
+    }
     Pos_old = Pos;
     t_old_enc = t; //save current time and position
 
@@ -540,7 +543,7 @@ void loop() {
 
   //Serial.print("MovementProgress: "); Serial.println(movementProgress);
   sortingTime = t - timePaused;
-  while (sortingTime >= 3*60) {
+  while (sortingTime >= 3 * 60) {
     Serial.println("Sorting finished!");
     motorCommand(mp1, mp2, mPWM, 0);
     motorCommand(hop1, hop2, hopPWM, 0);

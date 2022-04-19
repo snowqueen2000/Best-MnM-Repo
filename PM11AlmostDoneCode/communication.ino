@@ -14,7 +14,6 @@ void communication() {
   //Tell previous module to stop sending MnMs if queue is full
   if (Qsize >= maxQsize) {
     digitalWrite(commOutPin, HIGH);
-    motorCommand(hop1, hop2, hopPWM, 0);
   } else {
     digitalWrite(commOutPin, LOW);
   }
