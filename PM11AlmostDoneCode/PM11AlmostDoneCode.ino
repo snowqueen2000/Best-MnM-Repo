@@ -105,6 +105,9 @@ double T_OLED = 0.5;
 double LED_old = 0;
 double t_servo_old = 0;
 double T_servo = 0.4;
+double sortingTime = 0;
+double timePaused = 0;
+double tPause_old = 0;
 
 int movementProgress = 0;
 
@@ -204,6 +207,7 @@ int buttonOff = 1;
 bool otherModulesConnected = true;
 
 void setup() {
+
   statusLED("blue");
   Serial.begin(9600);
   pinMode(mp1, OUTPUT);
@@ -267,6 +271,7 @@ void setup() {
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
   display.clearDisplay();
 
+  timePaused = millis() / 1000;
 }
 
 void loop() {
@@ -294,6 +299,10 @@ void loop() {
 
     //Stop motor if needed
     if (irStopped || commStopped || estopped || estoppedOther) {
+      if (tPause_old == 0) {
+        tPause_old = t;
+      }
+
       motorCommand(mp1, mp2, mPWM, 0);
       motorCommand(hop1, hop2, hopPWM, 0);
 
@@ -302,27 +311,27 @@ void loop() {
       display.setTextColor(WHITE);
       display.setCursor(0, 0);
       display.println("Sorting stopped!");
-      if(irStopped) {
+      if (irStopped) {
         display.println("IR Triggered!");
       } else {
         display.println();
       }
-      if(commStopped) {
+      if (commStopped) {
         display.println("Queue full");
       } else {
         display.println();
       }
-      if(estopped) {
+      if (estopped) {
         display.println("Estop triggered");
       } else {
         //display.println();
       }
-      if(estoppedOther) {
+      if (estoppedOther) {
         display.println("Other estop triggered!");
       } else {
         //display.println();
       }
-      
+
       display.display();
       setLED(1, 1, 1);
 
@@ -331,11 +340,13 @@ void loop() {
         estopped = false;
         Serial.println("Sorting resumed!");
         statusLED("green");
-        
+
         zeroMotor();
-        
+
         //Communication to other modules
         digitalWrite(estopOutPin, LOW);
+        timePaused += (t - tPause_old);
+        tPause_old = 0;
       }
     }
 
@@ -369,7 +380,7 @@ void loop() {
     motorCommand(mp1, mp2, mPWM, input);
 
     //Send command to hopper motor
-    motorCommand(hop1, hop2, hopPWM, 8);
+    motorCommand(hop1, hop2, hopPWM, 6);
 
     Pos_old = Pos;
     t_old_enc = t; //save current time and position
@@ -527,6 +538,14 @@ void loop() {
     T_moveOld = t;
   }
 
-  Serial.print("MovementProgress: "); Serial.println(movementProgress);
+  //Serial.print("MovementProgress: "); Serial.println(movementProgress);
+  sortingTime = t - timePaused;
+  while (sortingTime >= 3*60) {
+    Serial.println("Sorting finished!");
+    motorCommand(mp1, mp2, mPWM, 0);
+    motorCommand(hop1, hop2, hopPWM, 0);
+    statusLED("blue");
+  }
+
 
 }
