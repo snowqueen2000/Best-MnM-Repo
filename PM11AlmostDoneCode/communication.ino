@@ -1,56 +1,62 @@
 
-//commOut connects to module above, commIn is connected to module below
-int commOutPin = 50;
-int commInPin = 52;
 
-//these pins are connected to each other and the estop pins on every other module. Copper tape?
-int estopOutPin = 53;
-int estopInPin = 51;
-
-int estopTriggerPin = A1; //MAY NEED TO CHANGE THIS PIN
 
 /**
- * Checks for message from the next module, and sends messages to previous module.
- */
- 
+   Checks for message from the next module, and sends messages to previous module.
+*/
+
 void communication() {
 
-  
-//Serial.println(analogRead(estopTriggerPin));
+
+  //Serial.println(analogRead(estopTriggerPin));
 
 
   //Tell previous module to stop sending MnMs if queue is full
-  if(Qsize >= maxQsize) {
+  if (Qsize >= maxQsize) {
     digitalWrite(commOutPin, HIGH);
+    motorCommand(hop1, hop2, hopPWM, 0);
   } else {
     digitalWrite(commOutPin, LOW);
   }
 
   //Measure voltage on 5v bus to determine if estop is triggered and tell other modules to stop
-  if(analogRead(estopTriggerPin) < 300 || IRdist < 21) {
+  if (analogRead(estopTriggerPin) < 400) {
     digitalWrite(estopOutPin, HIGH);
+    estopped = true;
+    Serial.println("\t\tE stop triggered!!");
+    statusLED("red");
   } else {
-    digitalWrite(estopOutPin, LOW);
+    //digitalWrite(estopOutPin, LOW);
   }
+  Serial.print("Estop trigger: "); Serial.println(analogRead(estopTriggerPin));
 
-  
 
   //Stop sorting operation if next module tells it to.
   int commIn = digitalRead(commInPin);
-  int estopIn = digitalRead(estopInPin);
-    
+  int estopIn = analogRead(estopInPin);
+  Serial.print("E stop in: "); Serial.println(estopIn);
+  Serial.print("My estop value: "); Serial.println(analogRead(estopTriggerPin));
 
-  if(commIn == 1) {
-    commStopped = true;
-  } else {
-    commStopped = false;
+  if (otherModulesConnected) {
+    if (commIn == 1) {
+      commStopped = true;
+
+    } else {
+      commStopped = false;
+    }
+
+    if (estopIn >= 300) {
+      estoppedOther = true;
+      statusLED("blue");
+    } else {
+      estoppedOther = false;
+    }
+
   }
 
-  if(estopIn == 1) {
-    estopped = true;
-  }
-  if(IRdist < 21 && IRdist != 0) {
+  if (IRdist < 21 && IRdist != 0) {
     irStopped = true;
+    statusLED("red");
   }
 
 }

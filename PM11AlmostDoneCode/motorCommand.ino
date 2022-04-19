@@ -26,3 +26,32 @@ void motorCommand(int mpa, int mpb, int PWM, double command) {
   analogWrite(PWM, command);
 
 }
+
+void zeroMotor() {
+
+  Serial.println("Zeroing...");
+
+  
+  int zeropos = digitalRead(clicking);
+  //Serial.println(zeropos);
+  while (zeropos == 1) {
+    motorCommand(mp1, mp2, mPWM, -2);
+    zeropos = digitalRead(clicking);
+    //Serial.println(zeropos);
+  }
+
+
+
+  while (zeropos == 0) {
+    motorCommand(mp1, mp2, mPWM, -2);
+    zeropos = digitalRead(clicking);
+    //Serial.println(zeropos);
+  }
+
+  motorCommand(mp1, mp2, mPWM, 0);
+  myEnc.write(200);
+  Pos = 0;
+  Pos_desired = 0;
+
+  Serial.println("Zeroing complete!");
+}
