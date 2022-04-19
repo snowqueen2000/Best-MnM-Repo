@@ -429,7 +429,7 @@ void loop() {
 
         metalDetect();
         //Color/metal sense until enough data points are taken, then move on
-        if (metalGate1 == 0) { //TEMPORARY UNTIL WE GET HALL SENSORS SET UP
+        if (metalGate1 == 0 || true) { //TEMPORARY UNTIL WE GET HALL SENSORS SET UP
 
           if (colorToSense == 'B') {
             //Turn on BLUE LED
@@ -513,7 +513,7 @@ void loop() {
         break;
 
       case 6:
-        //close gates. Might need to add a "delay" here so that the gates close before the motor starts moving.
+        //close gates.
         CloseGate1();
         CloseGate2();
         movementProgress = 7;
