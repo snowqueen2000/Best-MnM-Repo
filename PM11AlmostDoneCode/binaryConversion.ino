@@ -3,7 +3,7 @@
  * If there's only 2 pins to read, set mostPin to 0 and it will be ignored.
  *
   */
-int binaryConversion(int leastPin, int midPin, int mostPin) {
+int binaryConversion(int mostPin, int midPin, int leastPin) {
   
   int value = digitalRead(leastPin) + digitalRead(midPin) * 2;
 
@@ -13,4 +13,4 @@ int binaryConversion(int leastPin, int midPin, int mostPin) {
 
   return value; //stub
   
-}
+} 

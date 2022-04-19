@@ -43,9 +43,21 @@ const int mp1 = 6;
 const int mp2 = 7;
 
 //Hopper motor pins
-const int hopPWM = 3;
-const int hop1 = 1;
-const int hop2 = 2;
+const int hopPWM = A13;
+const int hop1 = A11;
+const int hop2 = A12;
+
+//Communication pins
+
+//commOut connects to module above, commIn is connected to module below
+int commOutPin = 50;
+int commInPin = 52;
+
+//these pins are connected to each other and the estop pins on every other module. Copper tape?
+int estopOutPin = A14;
+int estopInPin = A15;
+
+int estopTriggerPin = A1; //MAY NEED TO CHANGE THIS PIN
 
 // encoder
 Encoder myEnc(18, 19); // initialize encoder A out --> 18, B out --> 19
@@ -172,7 +184,6 @@ int lightError = 5;
 int gate1 = 0;
 int gate2 = 0;
 
-
 //metal values storage
 int metalSlot = 0;
 int metalGate1 = 0;
@@ -181,8 +192,15 @@ int metalGate2 = 0;
 //Variable can be changed by ANY OTHER module's estop or previous modulu's queue sensor.
 //bool stopSorting = false;
 bool estopped = false;
+bool estoppedOther = false;
 bool commStopped = false;
 bool irStopped = false;
+
+//Change this to a 1 or 0 depending on if when the button is pressed it outputs a 1 or 0.
+int buttonOn = 0;
+int buttonOff = 1;
+
+bool otherModulesConnected = true;
 
 void setup() {
   statusLED("blue");
@@ -193,6 +211,15 @@ void setup() {
   pinMode(red_pin, OUTPUT);
   pinMode(green_pin, OUTPUT);
   pinMode(blue_pin, OUTPUT);
+
+  pinMode(estopOutPin, OUTPUT);
+  pinMode(estopInPin, INPUT);
+  pinMode(estopTriggerPin, INPUT);
+  pinMode(startButton, INPUT);
+
+  pinMode(hop1, OUTPUT);
+  pinMode(hop2, OUTPUT);
+  pinMode(hopPWM, OUTPUT);
 
   //turn off color sensor light
   digitalWrite(red_pin, HIGH);
@@ -265,17 +292,49 @@ void loop() {
     }
 
     //Stop motor if needed
-    if (irStopped || commStopped || estopped) {
+    if (irStopped || commStopped || estopped || estoppedOther) {
       motorCommand(mp1, mp2, mPWM, 0);
       motorCommand(hop1, hop2, hopPWM, 0);
 
+      display.clearDisplay();
+      display.setTextSize(1);
+      display.setTextColor(WHITE);
+      display.setCursor(0, 0);
+      display.println("Sorting stopped!");
+      if(irStopped) {
+        display.println("IR Triggered!");
+      } else {
+        display.println();
+      }
+      if(commStopped) {
+        display.println("Queue full");
+      } else {
+        display.println();
+      }
+      if(estopped) {
+        display.println("Estop triggered");
+      } else {
+        //display.println();
+      }
+      if(estoppedOther) {
+        display.println("Other estop triggered!");
+      } else {
+        //display.println();
+      }
+      
+      display.display();
       setLED(1, 1, 1);
 
-      if (digitalRead(startButton) == 0) {
+      if (digitalRead(startButton) == buttonOn && analogRead(estopTriggerPin) > 400) {
         irStopped = false;
         estopped = false;
         Serial.println("Sorting resumed!");
         statusLED("green");
+        
+        zeroMotor();
+        
+        //Communication to other modules
+        digitalWrite(estopOutPin, LOW);
       }
     }
 
@@ -309,7 +368,7 @@ void loop() {
     motorCommand(mp1, mp2, mPWM, input);
 
     //Send command to hopper motor
-    motorCommand(hop1, hop2, hopPWM, 10);
+    motorCommand(hop1, hop2, hopPWM, 8);
 
     Pos_old = Pos;
     t_old_enc = t; //save current time and position
@@ -358,7 +417,7 @@ void loop() {
 
         metalDetect();
         //Color/metal sense until enough data points are taken, then move on
-        if (metalGate1 == 0 || true) { //TEMPORARY UNTIL WE GET HALL SENSORS SET UP
+        if (metalGate1 == 0) { //TEMPORARY UNTIL WE GET HALL SENSORS SET UP
 
           if (colorToSense == 'B') {
             //Turn on BLUE LED
@@ -467,6 +526,6 @@ void loop() {
     T_moveOld = t;
   }
 
-  //Serial.print("MovementProgress: "); Serial.println(movementProgress);
+  Serial.print("MovementProgress: "); Serial.println(movementProgress);
 
 }
