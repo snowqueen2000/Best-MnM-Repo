@@ -14,7 +14,7 @@ void servoChecks() {
   }
 
   //Gate 2: Unsorted
-  if(gate2 != 0 && gate2 != colorDetect) { //gate2 != 0 &&
+  if( gate2 != colorDetect) { //gate2 != 0 &&
     OpenGate2();
     unsortedCount++;
   } else {

@@ -15,7 +15,6 @@ int colorDetect = 2; // R=1, G=2. Bl=3, Ye=4, Or=5, Br=6, empty=0
 // OLED Variables
 #define OLED_RESET 4
 Adafruit_SSD1306 display(OLED_RESET);
-const int OLED_Color = colorDetect;
 
 //start button pins
 int startButton = 46;
@@ -153,20 +152,20 @@ bool firstCheck = true;
 //double empty[] = {852, 766, 860}; //u
 //double wheel[] = {};
 
-double rv[] = {25, 35, 30, 34, 21, 25}; //u BGR
-double blv[] = {19, 22, 24, 28, 33, 37} ; //u
-double gv[] = {27, 31, 21, 25, 31, 37}; //u
-double brv[] = {29, 33, 31, 35, 33, 36}; //u
-double yev[] = {667, 317, 487, 300, 736, 600}; //u
-double orv[] = {676, 239, 665, 400, 371, 200}; //u
-double emptyv[] = {873, 397, 722, 479, 876, 486}; //u
+double rv[] = {50, 30, 300, 38, 20, 31}; //u yay
+double blv[] = {29, 17, 30, 25, 40, 300} ; //yay
+double gv[] = {36, 28, 28, 23, 42, 30}; //yay
+double brv[] = {32 + 7, 32 - 7, 38 + 7, 38 - 7, 36 + 7, 36 - 7}; //yay
+double yev[] = {36 + 7, 36 - 7, 24 + 7, 24 - 7, 22 + 7, 22 - 7}; //yay
+double orv[] = {32 + 7, 32 - 7, 47 + 7, 47 - 7, 22 + 7, 22 - 7}; //yay
+double emptyv[] = {873, 397, 722, 479, 876, 486}; //blech
 
-double r[] = {31, 31, 25}; //u       //comment for test
-double bl[] = {20, 25, 35}; //u
-double g[] = {28, 22, 31}; //u
-double br[] = {28, 31, 31}; //u
-double ye[] = {28, 21, 20}; //u
-double ora[] = {31, 30, 21}; //u
+double r[] = {33, 40, 26}; //u       //comment for test
+double bl[] = {22, 28, 42}; //u
+double g[] = {31, 23, 38}; //u
+double br[] = {32, 38, 36}; //u
+double ye[] = {36, 24, 22}; //u
+double ora[] = {32, 47, 22}; //u
 double empty[] = {30, 30, 30}; //u
 
 double wheel[] = {};
@@ -204,7 +203,7 @@ bool irStopped = false;
 int buttonOn = 0;
 int buttonOff = 1;
 
-bool otherModulesConnected = true;
+bool otherModulesConnected = false;
 
 void setup() {
 
@@ -244,23 +243,23 @@ void setup() {
   }, SensorCount);
   qtr.setEmitterPin(2);
 
-  for (int i = 0; i < 6; i += 2) {    //comment for test
-    rv[i] = r[i / 2] + lightError;
-    rv[i + 1] = r[i / 2] - lightError;
-    blv[i] = bl[i / 2] + lightError;
-    blv[i + 1] = bl[i / 2] - lightError;
-    gv[i] = g[i / 2] + lightError;
-    gv[i + 1] = g[i / 2] - lightError;
-    brv[i] = br[i / 2] + lightError;
-    brv[i + 1] = br[i / 2] - lightError;
-    yev[i] = ye[i / 2] + lightError;
-    yev[i + 1] = ye[i / 2] - lightError;
-    orv[i] = ora[i / 2] + lightError;
-    orv[i + 1] = ora[i / 2] - lightError;
-    emptyv[i] = empty[i / 2] + lightError;
-    emptyv[i + 1] = empty[i / 2] - lightError;
-
-  }
+  //  for (int i = 0; i < 6; i += 2) {    //comment for test
+  //    rv[i] = r[i / 2] + lightError;
+  //    rv[i + 1] = r[i / 2] - lightError;
+  //    blv[i] = bl[i / 2] + lightError;
+  //    blv[i + 1] = bl[i / 2] - lightError;
+  //    gv[i] = g[i / 2] + lightError;
+  //    gv[i + 1] = g[i / 2] - lightError;
+  //    brv[i] = br[i / 2] + lightError;
+  //    brv[i + 1] = br[i / 2] - lightError;
+  //    yev[i] = ye[i / 2] + lightError;
+  //    yev[i + 1] = ye[i / 2] - lightError;
+  //    orv[i] = ora[i / 2] + lightError;
+  //    orv[i + 1] = ora[i / 2] - lightError;
+  //    emptyv[i] = empty[i / 2] + lightError;
+  //    emptyv[i + 1] = empty[i / 2] - lightError;
+  //
+  //  }
 
   for (int i = 0; i < 6; i++) {
     Serial.print("Blue max/mins: "); Serial.println(blv[i]);
@@ -362,7 +361,7 @@ void loop() {
     Qsensing();
 
     //Update OLED
-    OLED(OLED_Color);
+    OLED(colorDetect);
     t_OLED_old = t;
   }
 

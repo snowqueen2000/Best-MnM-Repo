@@ -27,19 +27,19 @@ void communication() {
   } else {
     //digitalWrite(estopOutPin, LOW);
   }
-  Serial.print("Estop trigger: "); Serial.println(analogRead(estopTriggerPin));
+  //Serial.print("Estop trigger: "); Serial.println(analogRead(estopTriggerPin));
 
 
   //Stop sorting operation if next module tells it to.
   int commIn = digitalRead(commInPin);
   int estopIn = analogRead(estopInPin);
-  Serial.print("E stop in: "); Serial.println(estopIn);
-  Serial.print("My estop value: "); Serial.println(analogRead(estopTriggerPin));
+  //Serial.print("E stop in: "); Serial.println(estopIn);
+  //Serial.print("My estop value: "); Serial.println(analogRead(estopTriggerPin));
 
   if (otherModulesConnected) {
     if (commIn == 1) {
       commStopped = true;
-
+      satusLED("blue");
     } else {
       commStopped = false;
     }
@@ -56,6 +56,7 @@ void communication() {
   if (IRdist < 21 && IRdist != 0) {
     irStopped = true;
     statusLED("red");
+    digitalWrite(estopOutPin, HIGH);
   }
 
 }
