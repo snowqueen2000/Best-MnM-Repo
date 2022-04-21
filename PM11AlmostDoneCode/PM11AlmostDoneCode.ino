@@ -212,6 +212,9 @@ void setup() {
   pinMode(mp1, OUTPUT);
   pinMode(mp2, OUTPUT);
 
+  pinMode(commOutPin, OUTPUT);
+  pinMode(commInPin, INPUT);
+
   pinMode(red_pin, OUTPUT);
   pinMode(green_pin, OUTPUT);
   pinMode(blue_pin, OUTPUT);
@@ -289,7 +292,7 @@ void loop() {
 
     t_checks_old = t;
 
-    if (commStopped) {
+    if (commStopped || estoppedOther) {
       statusLED("blue");
     }
     if (irStopped || estopped) {
@@ -367,7 +370,7 @@ void loop() {
 
 
   //Enocder stuff
-  if (t > t_old_enc + T_enc && !irStopped && !commStopped && !estopped) {
+  if (t > t_old_enc + T_enc && !irStopped && !commStopped && !estopped && !estoppedOther) {
 
     //Read encoder counts and calculate position/velocity
     EncoderCalcs();
@@ -391,7 +394,7 @@ void loop() {
 
 
   //Movement loop
-  if (!irStopped && !commStopped && !estopped) {
+  if (!irStopped && !commStopped && !estopped && !estoppedOther) {
     switch (movementProgress) {
 
 

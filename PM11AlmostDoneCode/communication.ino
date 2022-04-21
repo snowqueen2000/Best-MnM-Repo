@@ -14,6 +14,7 @@ void communication() {
   //Tell previous module to stop sending MnMs if queue is full
   if (Qsize >= maxQsize) {
     digitalWrite(commOutPin, HIGH);
+    Serial.println("Queue is full! Sending message");
   } else {
     digitalWrite(commOutPin, LOW);
   }
@@ -33,7 +34,7 @@ void communication() {
   //Stop sorting operation if next module tells it to.
   int commIn = digitalRead(commInPin);
   int estopIn = analogRead(estopInPin);
-  //Serial.print("E stop in: "); Serial.println(estopIn);
+  Serial.print("E stop in: "); Serial.println(estopIn);
   //Serial.print("My estop value: "); Serial.println(analogRead(estopTriggerPin));
 
   if (otherModulesConnected) {
