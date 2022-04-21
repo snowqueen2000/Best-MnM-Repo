@@ -39,7 +39,7 @@ void communication() {
   if (otherModulesConnected) {
     if (commIn == 1) {
       commStopped = true;
-      satusLED("blue");
+      statusLED("blue");
     } else {
       commStopped = false;
     }
